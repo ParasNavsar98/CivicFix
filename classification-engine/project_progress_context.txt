@@ -1,0 +1,229 @@
+================================================================================
+SOCIETAL INNOVATION COLLABORATION PORTAL - AI CLASSIFICATION ENGINE
+PROJECT PROGRESS & COMPLETE CONTEXT SUMMARY
+Generated Date: 2026-09-17
+================================================================================
+
+1. PROJECT OVERVIEW & PURPOSE
+--------------------------------------------------------------------------------
+The Standalone AI Classification Engine is a lightweight, modular, production-grade 
+Python 3.11+ microservice built using FastAPI, Pydantic v2, and Ollama (Gemma 3 4B).
+
+Its sole responsibility is receiving unstructured societal problem submissions from 
+citizens, analyzing the input text using LLM reasoning, validating output against a 
+strict controlled taxonomy and business rules, evaluating AI confidence, and returning 
+a structured machine-readable JSON classification.
+
+Key Principle: The engine is AI-assisted. High-confidence results (>= 0.85) are marked 
+as "classified", while ambiguous/low-confidence results (< 0.85) are marked as 
+"review_required" for human review. AI never makes irreversible real-world decisions.
+
+--------------------------------------------------------------------------------
+2. PROJECT STRUCTURE & FILE LOCATIONS
+--------------------------------------------------------------------------------
+Root Directory: classification-engine/
+
+classification-engine/
+├── app/
+│   ├── __init__.py
+│   ├── main.py                  # FastAPI server, /health & /classify endpoints, logging & exception handling
+│   ├── config.py                # Central Pydantic Settings configuration (env var loading)
+│   ├── schemas/
+│   │   ├── __init__.py
+│   │   ├── input.py             # ProblemClassificationInput & ProblemLocation validation models
+│   │   └── classification.py    # ClassificationResult & ClassificationResponse output models
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── preprocessor.py     # Text normalization, trimming, and sanitization
+│   │   ├── classifier.py       # Core orchestration pipeline & taxonomy validator
+│   │   └── confidence.py       # Threshold confidence evaluation engine
+│   ├── ai/
+│   │   ├── __init__.py
+│   │   ├── provider.py         # Abstract LLMProvider interface & custom exception hierarchy
+│   │   ├── ollama.py           # OllamaProvider with httpx, timeouts, and exponential backoff retries
+│   │   └── prompts.py          # Dynamic classification prompt construction with embedded taxonomy
+│   └── taxonomy/
+│       ├── __init__.py
+│       └── taxonomy.py         # Controlled 12-domain taxonomy map & helper query functions
+├── tests/
+│   ├── __init__.py
+│   ├── test_taxonomy.py        # 4 unit tests for domain & subcategory helper functions
+│   ├── test_schemas.py         # 9 unit tests for input/output Pydantic validation & boundary checks
+│   ├── test_confidence.py      # 2 unit tests for confidence threshold logic
+│   ├── test_classifier.py     # 9 unit tests for classifier pipeline & sample cases 1-6
+│   └── test_api.py            # 3 integration tests for FastAPI HTTP endpoints
+├── .env.example                 # Environment variables template
+├── .gitignore                   # Git exclusion rules
+├── requirements.txt             # Python dependencies
+└── README.md                    # Complete setup, running, and API documentation
+
+--------------------------------------------------------------------------------
+3. CONTROLLED TAXONOMY (12 PRIMARY DOMAINS)
+--------------------------------------------------------------------------------
+1. Education: ["Access", "Infrastructure", "Learning Support", "Digital Education"]
+2. Healthcare: ["Access", "Public Health", "Facilities", "Diagnostics"]
+3. Agriculture: ["Irrigation", "Crop Support", "Storage", "Market Linkage"]
+4. Water Resources: ["Supply", "Quality", "Leakage", "Conservation", "Monitoring"]
+5. Sanitation: ["Waste", "Drainage", "Toilets", "Cleanliness"]
+6. Environment: ["Pollution", "Biodiversity", "Waste Reduction", "Climate Resilience"]
+7. Energy: ["Access", "Efficiency", "Renewable Energy", "Public Lighting"]
+8. Urban Infrastructure: ["Roads", "Drainage", "Streetlights", "Public Spaces"]
+9. Accessibility: ["Mobility", "Assistive Infrastructure", "Inclusive Services"]
+10. Public Administration: ["Service Delivery", "Information Access", "Process Gaps"]
+11. Rural Livelihoods: ["Skills", "Employment", "Local Enterprises", "Market Access"]
+12. Other: ["Unclassified"]
+
+Helper functions in app/taxonomy/taxonomy.py:
+- get_domains() -> list[str]
+- get_subcategories(domain: str) -> list[str]
+- is_valid_domain(domain: str) -> bool
+- is_valid_subcategory(domain: str, subcategory: str) -> bool
+
+--------------------------------------------------------------------------------
+4. DATA CONTRACTS (PYDANTIC V2)
+--------------------------------------------------------------------------------
+Input Model (app/schemas/input.py):
+- ProblemLocation: district (str, required), state (str, required), latitude (float, optional -90 to 90), longitude (float, optional -180 to 180).
+- ProblemClassificationInput: problemId (str, required), title (str, required), description (str, required), location (ProblemLocation). Includes field trimming and non-empty validation.
+
+Output Models (app/schemas/classification.py):
+- ClassificationResult:
+    * problemSummary: str
+    * primaryDomain: str (must be in controlled taxonomy)
+    * secondaryDomains: list[str]
+    * subcategory: str (must belong to primaryDomain)
+    * severity: LOW | MEDIUM | HIGH | CRITICAL
+    * urgency: LOW | MEDIUM | HIGH | CRITICAL
+    * researchRequired: bool
+    * governmentActionPossible: bool
+    * requiredExpertise: list[str]
+    * requiredResources: list[str]
+    * confidence: float (0.0 to 1.0)
+    * reasoning: str
+- ClassificationResponse:
+    * problemId: str
+    * status: classified | review_required | failed
+    * classification: Optional[ClassificationResult]
+    * error: Optional[ErrorDetails]
+
+--------------------------------------------------------------------------------
+5. CONFIDENCE EVALUATION RULES
+--------------------------------------------------------------------------------
+Defined in app/services/confidence.py & app/config.py:
+- AI_HIGH_CONFIDENCE_THRESHOLD = 0.85
+- AI_REVIEW_THRESHOLD = 0.60
+
+Logic:
+If confidence >= 0.85 -> status = "classified"
+If confidence < 0.85  -> status = "review_required"
+
+--------------------------------------------------------------------------------
+6. API ENDPOINTS & HTTP CONTRACTS
+--------------------------------------------------------------------------------
+GET /health -> {"status": "healthy"}
+
+POST /classify
+Request Payload:
+{
+    "problemId": "P1001",
+    "title": "Garbage burning near school",
+    "description": "People dump garbage near our school and burn it every evening.",
+    "location": {
+        "district": "Ranchi",
+        "state": "Jharkhand",
+        "latitude": 23.3441,
+        "longitude": 85.3096
+    }
+}
+
+Response (High Confidence):
+{
+    "problemId": "P1001",
+    "status": "classified",
+    "classification": {
+        "problemSummary": "Open waste dumping and burning near a school causing smoke pollution",
+        "primaryDomain": "Environment",
+        "secondaryDomains": ["Sanitation"],
+        "subcategory": "Pollution",
+        "severity": "HIGH",
+        "urgency": "HIGH",
+        "researchRequired": false,
+        "governmentActionPossible": true,
+        "requiredExpertise": ["Waste Management", "Environmental Engineering"],
+        "requiredResources": ["Waste collection vehicles", "Pollution monitoring"],
+        "confidence": 0.91,
+        "reasoning": "Outdoor burning of waste near a school creates acute air pollution."
+    },
+    "error": null
+}
+
+Response (Low Confidence / Ambiguous Input):
+{
+    "problemId": "P1006",
+    "status": "review_required",
+    "classification": {
+        "problemSummary": "Unspecified village problem",
+        "primaryDomain": "Other",
+        "secondaryDomains": [],
+        "subcategory": "Unclassified",
+        "severity": "LOW",
+        "urgency": "LOW",
+        "researchRequired": false,
+        "governmentActionPossible": false,
+        "requiredExpertise": [],
+        "requiredResources": [],
+        "confidence": 0.40,
+        "reasoning": "Input is extremely vague and lacks specific details."
+    },
+    "error": null
+}
+
+Response (Controlled Error Failure):
+{
+    "status": "failed",
+    "errorCode": "AI_PROVIDER_UNAVAILABLE",
+    "message": "Classification service is temporarily unavailable."
+}
+
+--------------------------------------------------------------------------------
+7. TEST SUITE & VERIFICATION STATUS
+--------------------------------------------------------------------------------
+Total Automated Tests: 27
+Passed: 27 / 27 (100%)
+Execution Time: 0.94s
+
+Test Coverage Breakdown:
+- test_taxonomy.py: 4 tests (domain list, subcategories, domain check, subcategory check)
+- test_schemas.py: 9 tests (valid input, empty title/desc, lat/lon bounds, valid output, confidence range, enum checks)
+- test_confidence.py: 2 tests (high confidence -> classified, low confidence -> review_required)
+- test_classifier.py: 9 tests (Sample Cases 1-6: Garbage burning, Water leakage, Cold storage, Broken road, Hospital equipment, Ambiguous input, Malformed LLM JSON, Invalid taxonomy, LLM Timeout)
+- test_api.py: 3 tests (/health check, /classify endpoint success with mock LLM, /classify input validation failure)
+
+--------------------------------------------------------------------------------
+8. HOW TO RUN & TEST THE SERVICE
+--------------------------------------------------------------------------------
+1. Navigate to directory:
+   cd classification-engine
+
+2. Create & activate virtual environment:
+   python -m venv .venv
+   .venv\Scripts\Activate.ps1   (Windows PowerShell)
+
+3. Install requirements:
+   pip install -r requirements.txt
+
+4. Run unit tests:
+   pytest -v
+
+5. Start FastAPI server:
+   uvicorn app.main:app --reload --port 8000
+
+--------------------------------------------------------------------------------
+9. FUTURE EXTENSION POINTS (PLUG-AND-PLAY ARCHITECTURE)
+--------------------------------------------------------------------------------
+- Swapping Ollama with OpenAI/Anthropic: Implement LLMProvider interface in app/ai/provider.py
+- Multilingual translation & text normalization in app/services/preprocessor.py
+- Image / Video multimodal support
+- Duplicate detection & vector embeddings integration
+- Active learning feedback loop from human reviewers
+================================================================================
