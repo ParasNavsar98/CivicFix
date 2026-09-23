@@ -1,0 +1,1640 @@
+[
+  {
+    "case_id": "CASE-001",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P1001",
+      "title": "Garbage burning near school",
+      "description": "Garbage is being burned near a school, producing harmful smoke.",
+      "location": {
+        "lat": 23.3441,
+        "long": 85.3096,
+        "address": "School Road, District Ranchi"
+      },
+      "primaryDomain": "Environment",
+      "secondaryDomains": [
+        "Public Health"
+      ],
+      "subcategory": "Air Pollution"
+    },
+    "problem_b": {
+      "problemId": "P1002",
+      "title": "Unprocessed waste burning near school",
+      "description": "Unprocessed waste is being burned close to the school and causing air pollution.",
+      "location": {
+        "lat": 23.345,
+        "long": 85.31,
+        "address": "School Road, District Ranchi"
+      },
+      "primaryDomain": "Environment",
+      "secondaryDomains": [
+        "Public Health"
+      ],
+      "subcategory": "Air Pollution"
+    }
+  },
+  {
+    "case_id": "CASE-002",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P1003",
+      "title": "Potholes on Main Street market",
+      "description": "Potholes on Main Street near the central market are causing heavy traffic and minor accidents.",
+      "location": {
+        "lat": 23.36,
+        "long": 85.33,
+        "address": "Main Street Market"
+      },
+      "primaryDomain": "Infrastructure",
+      "secondaryDomains": [
+        "Transport"
+      ],
+      "subcategory": "Road Maintenance"
+    },
+    "problem_b": {
+      "problemId": "P1004",
+      "title": "Deep craters on Main St",
+      "description": "Deep road craters near the central market on Main St are creating traffic jams and vehicle damage.",
+      "location": {
+        "lat": 23.3605,
+        "long": 85.3305,
+        "address": "Main Street Market"
+      },
+      "primaryDomain": "Infrastructure",
+      "secondaryDomains": [
+        "Transport"
+      ],
+      "subcategory": "Road Maintenance"
+    }
+  },
+  {
+    "case_id": "CASE-003",
+    "category": "exact_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P1005",
+      "title": "Water pipe leak in Sector 4",
+      "description": "Drinking water pipeline broken near Sector 4 community hall, causing severe water leakage.",
+      "location": {
+        "lat": 23.37,
+        "long": 85.34,
+        "address": "Sector 4 Hall"
+      },
+      "primaryDomain": "Water & Sanitation",
+      "secondaryDomains": [
+        "Infrastructure"
+      ],
+      "subcategory": "Pipe Leakage"
+    },
+    "problem_b": {
+      "problemId": "P1006",
+      "title": "Water pipe leak in Sector 4",
+      "description": "Drinking water pipeline broken near Sector 4 community hall, causing severe water leakage.",
+      "location": {
+        "lat": 23.37,
+        "long": 85.34,
+        "address": "Sector 4 Hall"
+      },
+      "primaryDomain": "Water & Sanitation",
+      "secondaryDomains": [
+        "Infrastructure"
+      ],
+      "subcategory": "Pipe Leakage"
+    }
+  },
+  {
+    "case_id": "CASE-004",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P1007",
+      "title": "Health center emergency drug shortage",
+      "description": "Primary health center lacks basic emergency medicines and essential first-aid supplies.",
+      "location": {
+        "lat": 23.38,
+        "long": 85.35,
+        "address": "PHC Center"
+      },
+      "primaryDomain": "Healthcare",
+      "secondaryDomains": [
+        "Public Health"
+      ],
+      "subcategory": "Medical Supplies"
+    },
+    "problem_b": {
+      "problemId": "P1008",
+      "title": "Shortage of drugs at local PHC",
+      "description": "The local primary health facility has a shortage of critical emergency drugs and first-aid kits.",
+      "location": {
+        "lat": 23.3802,
+        "long": 85.3503,
+        "address": "PHC Center"
+      },
+      "primaryDomain": "Healthcare",
+      "secondaryDomains": [
+        "Public Health"
+      ],
+      "subcategory": "Medical Supplies"
+    }
+  },
+  {
+    "case_id": "CASE-005",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P1009",
+      "title": "Power cuts in industrial zone",
+      "description": "Frequent unexpected power outages occurring in the industrial zone during peak working hours.",
+      "location": {
+        "lat": 23.39,
+        "long": 85.36,
+        "address": "Industrial Estate"
+      },
+      "primaryDomain": "Energy & Power",
+      "secondaryDomains": [
+        "Economy"
+      ],
+      "subcategory": "Power Outage"
+    },
+    "problem_b": {
+      "problemId": "P1010",
+      "title": "Electricity supply cuts in industrial estate",
+      "description": "Unannounced electricity supply cuts happening repeatedly in the industrial estate in working hours.",
+      "location": {
+        "lat": 23.3905,
+        "long": 85.3608,
+        "address": "Industrial Estate"
+      },
+      "primaryDomain": "Energy & Power",
+      "secondaryDomains": [
+        "Economy"
+      ],
+      "subcategory": "Power Outage"
+    }
+  },
+  {
+    "case_id": "CASE-006",
+    "category": "short_vs_detailed",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P1011",
+      "title": "Open sewage leak on Road 5",
+      "description": "Open sewage overflow.",
+      "location": {
+        "lat": 23.34,
+        "long": 85.31,
+        "address": "Road 5"
+      },
+      "primaryDomain": "Water & Sanitation",
+      "secondaryDomains": [
+        "Public Health"
+      ],
+      "subcategory": "Sewage Overflow"
+    },
+    "problem_b": {
+      "problemId": "P1012",
+      "title": "Massive sewage overflow spilling onto Road 5",
+      "description": "Underground sewer pipe breached on Road 5 creating foul smelling black wastewater spill across 100 meters.",
+      "location": {
+        "lat": 23.3405,
+        "long": 85.3105,
+        "address": "Road 5"
+      },
+      "primaryDomain": "Water & Sanitation",
+      "secondaryDomains": [
+        "Public Health"
+      ],
+      "subcategory": "Sewage Overflow"
+    }
+  },
+  {
+    "case_id": "CASE-007",
+    "category": "nearby_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P1013",
+      "title": "Toxic chemical dumping near river",
+      "description": "Illegal industrial waste dumping happening beside North River bank near bridge.",
+      "location": {
+        "lat": 23.35,
+        "long": 85.32,
+        "address": "North River Bridge"
+      },
+      "primaryDomain": "Environment",
+      "secondaryDomains": [
+        "Water & Sanitation"
+      ],
+      "subcategory": "Water Pollution"
+    },
+    "problem_b": {
+      "problemId": "P1014",
+      "title": "Chemical waste dumped into river",
+      "description": "Factories are releasing untreated toxic liquid chemical waste near the river bank next to North bridge.",
+      "location": {
+        "lat": 23.352,
+        "long": 85.322,
+        "address": "North River Bridge"
+      },
+      "primaryDomain": "Environment",
+      "secondaryDomains": [
+        "Water & Sanitation"
+      ],
+      "subcategory": "Water Pollution"
+    }
+  },
+  {
+    "case_id": "CASE-008",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P1015",
+      "title": "Streetlight failure near bus stand",
+      "description": "Dark stretch near central bus terminus due to broken street lights.",
+      "location": {
+        "lat": 23.355,
+        "long": 85.325,
+        "address": "Bus Terminus"
+      },
+      "primaryDomain": "Infrastructure",
+      "secondaryDomains": [
+        "Public Safety"
+      ],
+      "subcategory": "Street Lighting"
+    },
+    "problem_b": {
+      "problemId": "P1016",
+      "title": "Non-functional street lamps at bus station",
+      "description": "Streetlights around central bus stand are burnt out causing darkness and safety risk.",
+      "location": {
+        "lat": 23.3552,
+        "long": 85.3253,
+        "address": "Bus Terminus"
+      },
+      "primaryDomain": "Infrastructure",
+      "secondaryDomains": [
+        "Public Safety"
+      ],
+      "subcategory": "Street Lighting"
+    }
+  },
+  {
+    "case_id": "CASE-009",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P1017",
+      "title": "School building ceiling collapse risk",
+      "description": "Government primary school building roof concrete chunks falling off in classrooms.",
+      "location": {
+        "lat": 23.365,
+        "long": 85.335,
+        "address": "Govt Primary School"
+      },
+      "primaryDomain": "Education",
+      "secondaryDomains": [
+        "Infrastructure"
+      ],
+      "subcategory": "School Building Damage"
+    },
+    "problem_b": {
+      "problemId": "P1018",
+      "title": "Damaged classroom ceiling at Govt school",
+      "description": "Roof structure of government school is dilapidated and plaster is crumbling over students.",
+      "location": {
+        "lat": 23.3651,
+        "long": 85.3351,
+        "address": "Govt Primary School"
+      },
+      "primaryDomain": "Education",
+      "secondaryDomains": [
+        "Infrastructure"
+      ],
+      "subcategory": "School Building Damage"
+    }
+  },
+  {
+    "case_id": "CASE-010",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P1019",
+      "title": "Lack of cold storage for tomato harvest",
+      "description": "Vegetable farmers losing produce due to absence of cold storage facilities in block market.",
+      "location": {
+        "lat": 23.375,
+        "long": 85.345,
+        "address": "Block APMC Market"
+      },
+      "primaryDomain": "Agriculture",
+      "secondaryDomains": [
+        "Economy"
+      ],
+      "subcategory": "Post-Harvest Storage"
+    },
+    "problem_b": {
+      "problemId": "P1020",
+      "title": "No refrigerated warehouse for local farmers",
+      "description": "Farmers suffering heavy losses as local APMC market has no refrigerated cold chain warehouse.",
+      "location": {
+        "lat": 23.3755,
+        "long": 85.3455,
+        "address": "Block APMC Market"
+      },
+      "primaryDomain": "Agriculture",
+      "secondaryDomains": [
+        "Economy"
+      ],
+      "subcategory": "Post-Harvest Storage"
+    }
+  },
+  {
+    "case_id": "CASE-011",
+    "category": "same_domain_different_issue",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P1021",
+      "title": "Garbage burning near school",
+      "description": "Garbage is being burned near a school, producing harmful smoke.",
+      "location": {
+        "lat": 23.3441,
+        "long": 85.3096,
+        "address": "School Road"
+      },
+      "primaryDomain": "Environment",
+      "secondaryDomains": [
+        "Public Health"
+      ],
+      "subcategory": "Air Pollution"
+    },
+    "problem_b": {
+      "problemId": "P1022",
+      "title": "Irregular garbage truck pickup",
+      "description": "Garbage collection trucks are not visiting the neighborhood regularly, leaving bins overflowing.",
+      "location": {
+        "lat": 23.3441,
+        "long": 85.3096,
+        "address": "School Road"
+      },
+      "primaryDomain": "Environment",
+      "secondaryDomains": [
+        "Waste Management"
+      ],
+      "subcategory": "Waste Collection"
+    }
+  },
+  {
+    "case_id": "CASE-012",
+    "category": "same_domain_different_issue",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P1023",
+      "title": "Drinking water pipe leak",
+      "description": "Drinking water pipeline broken near Sector 4 community hall, causing severe water leakage.",
+      "location": {
+        "lat": 23.37,
+        "long": 85.34,
+        "address": "Sector 4"
+      },
+      "primaryDomain": "Water & Sanitation",
+      "secondaryDomains": [
+        "Infrastructure"
+      ],
+      "subcategory": "Pipe Leakage"
+    },
+    "problem_b": {
+      "problemId": "P1024",
+      "title": "Contaminated drinking water quality",
+      "description": "Water supply in Sector 4 is contaminated with brown silt and smells bad when faucets are turned on.",
+      "location": {
+        "lat": 23.37,
+        "long": 85.34,
+        "address": "Sector 4"
+      },
+      "primaryDomain": "Water & Sanitation",
+      "secondaryDomains": [
+        "Public Health"
+      ],
+      "subcategory": "Water Quality"
+    }
+  },
+  {
+    "case_id": "CASE-013",
+    "category": "same_subcategory_different_incident",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P1025",
+      "title": "Potholes on Main Street market",
+      "description": "Potholes on Main Street near the central market are causing heavy traffic and minor accidents.",
+      "location": {
+        "lat": 23.36,
+        "long": 85.33,
+        "address": "Main Street Market"
+      },
+      "primaryDomain": "Infrastructure",
+      "secondaryDomains": [
+        "Transport"
+      ],
+      "subcategory": "Road Maintenance"
+    },
+    "problem_b": {
+      "problemId": "P1026",
+      "title": "Potholes on Highway 33 bypass",
+      "description": "Deep potholes on Highway 33 bypass near toll plaza damaging heavy trucks.",
+      "location": {
+        "lat": 23.45,
+        "long": 85.45,
+        "address": "Highway 33 Bypass"
+      },
+      "primaryDomain": "Infrastructure",
+      "secondaryDomains": [
+        "Transport"
+      ],
+      "subcategory": "Road Maintenance"
+    }
+  },
+  {
+    "case_id": "CASE-014",
+    "category": "same_domain_different_issue",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P1027",
+      "title": "Primary health center medicine shortage",
+      "description": "Primary health center lacks basic emergency medicines and essential first-aid supplies.",
+      "location": {
+        "lat": 23.38,
+        "long": 85.35,
+        "address": "PHC Center"
+      },
+      "primaryDomain": "Healthcare",
+      "secondaryDomains": [
+        "Public Health"
+      ],
+      "subcategory": "Medical Supplies"
+    },
+    "problem_b": {
+      "problemId": "P1028",
+      "title": "Primary health center roof leaking",
+      "description": "Primary health center building roof is leaking water during heavy rainfall.",
+      "location": {
+        "lat": 23.38,
+        "long": 85.35,
+        "address": "PHC Center"
+      },
+      "primaryDomain": "Healthcare",
+      "secondaryDomains": [
+        "Infrastructure"
+      ],
+      "subcategory": "Hospital Infrastructure"
+    }
+  },
+  {
+    "case_id": "CASE-015",
+    "category": "distant_duplicate",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P1029",
+      "title": "Garbage burning near school in Ranchi",
+      "description": "Garbage is being burned near a school, producing harmful smoke.",
+      "location": {
+        "lat": 23.3441,
+        "long": 85.3096,
+        "address": "Ranchi School Road"
+      },
+      "primaryDomain": "Environment",
+      "secondaryDomains": [
+        "Public Health"
+      ],
+      "subcategory": "Air Pollution"
+    },
+    "problem_b": {
+      "problemId": "P1030",
+      "title": "Garbage burning near school in Delhi",
+      "description": "Unprocessed waste is being burned close to the school and causing air pollution.",
+      "location": {
+        "lat": 28.6139,
+        "long": 77.209,
+        "address": "Delhi School Road"
+      },
+      "primaryDomain": "Environment",
+      "secondaryDomains": [
+        "Public Health"
+      ],
+      "subcategory": "Air Pollution"
+    }
+  },
+  {
+    "case_id": "CASE-016",
+    "category": "different_domain",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P1031",
+      "title": "Garbage burning near school",
+      "description": "Garbage is being burned near a school, producing harmful smoke.",
+      "location": {
+        "lat": 23.3441,
+        "long": 85.3096,
+        "address": "School Road"
+      },
+      "primaryDomain": "Environment",
+      "secondaryDomains": [
+        "Public Health"
+      ],
+      "subcategory": "Air Pollution"
+    },
+    "problem_b": {
+      "problemId": "P1032",
+      "title": "High school teacher shortage",
+      "description": "High school lacks qualified computer science teachers and functioning desktop computers.",
+      "location": {
+        "lat": 23.3441,
+        "long": 85.3096,
+        "address": "School Road"
+      },
+      "primaryDomain": "Education",
+      "secondaryDomains": [
+        "Human Resources"
+      ],
+      "subcategory": "Teacher Staffing"
+    }
+  },
+  {
+    "case_id": "CASE-017",
+    "category": "different_domain",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P1033",
+      "title": "Potholes on Main Street market",
+      "description": "Potholes on Main Street near the central market are causing heavy traffic and minor accidents.",
+      "location": {
+        "lat": 23.36,
+        "long": 85.33,
+        "address": "Main Street Market"
+      },
+      "primaryDomain": "Infrastructure",
+      "secondaryDomains": [
+        "Transport"
+      ],
+      "subcategory": "Road Maintenance"
+    },
+    "problem_b": {
+      "problemId": "P1034",
+      "title": "Fertilizer shortage for farmers",
+      "description": "Farmers are facing shortage of certified seeds and fertilizers for the upcoming sowing season.",
+      "location": {
+        "lat": 23.36,
+        "long": 85.33,
+        "address": "Main Street Market"
+      },
+      "primaryDomain": "Agriculture",
+      "secondaryDomains": [
+        "Economy"
+      ],
+      "subcategory": "Farm Inputs"
+    }
+  },
+  {
+    "case_id": "CASE-018",
+    "category": "different_domain",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P1035",
+      "title": "Power outages in industrial zone",
+      "description": "Frequent unexpected power outages occurring in the industrial zone during peak working hours.",
+      "location": {
+        "lat": 23.39,
+        "long": 85.36,
+        "address": "Industrial Estate"
+      },
+      "primaryDomain": "Energy & Power",
+      "secondaryDomains": [
+        "Economy"
+      ],
+      "subcategory": "Power Outage"
+    },
+    "problem_b": {
+      "problemId": "P1036",
+      "title": "Blood shortage at hospital blood bank",
+      "description": "Public hospital blood bank requires urgent blood donors for rare blood groups.",
+      "location": {
+        "lat": 23.39,
+        "long": 85.36,
+        "address": "Industrial Estate"
+      },
+      "primaryDomain": "Healthcare",
+      "secondaryDomains": [
+        "Public Safety"
+      ],
+      "subcategory": "Blood Bank"
+    }
+  },
+  {
+    "case_id": "CASE-019",
+    "category": "same_keywords_different_meaning",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P1037",
+      "title": "Fire outbreak at commercial market",
+      "description": "Major electrical short circuit fire in market building causing property damage.",
+      "location": {
+        "lat": 23.36,
+        "long": 85.33,
+        "address": "Market Building"
+      },
+      "primaryDomain": "Public Safety",
+      "secondaryDomains": [
+        "Disaster Management"
+      ],
+      "subcategory": "Fire Hazard"
+    },
+    "problem_b": {
+      "problemId": "P1038",
+      "title": "Fire brigade vehicle recruitment drive",
+      "description": "Local municipal corporation firing underperforming contractors and recruiting new fire safety drivers.",
+      "location": {
+        "lat": 23.36,
+        "long": 85.33,
+        "address": "Municipal Office"
+      },
+      "primaryDomain": "Governance",
+      "secondaryDomains": [
+        "Public Safety"
+      ],
+      "subcategory": "Contractor Oversight"
+    }
+  },
+  {
+    "case_id": "CASE-020",
+    "category": "missing_location",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P1039",
+      "title": "Overflowing dustbins in Ward 12",
+      "description": "Public garbage bins overflowing in Ward 12 attracting stray dogs and flies.",
+      "location": null,
+      "primaryDomain": "Environment",
+      "secondaryDomains": [
+        "Sanitation"
+      ],
+      "subcategory": "Waste Collection"
+    },
+    "problem_b": {
+      "problemId": "P1040",
+      "title": "Uncollected trash bins in Ward 12",
+      "description": "Trash containers in Ward 12 have not been emptied for five days creating health hazard.",
+      "location": null,
+      "primaryDomain": "Environment",
+      "secondaryDomains": [
+        "Sanitation"
+      ],
+      "subcategory": "Waste Collection"
+    }
+  },
+  {
+    "case_id": "CASE-021",
+    "category": "missing_classification",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P1041",
+      "title": "Broken footbridge over railway track",
+      "description": "Pedestrian footbridge over railway line has rusted iron steps and loose railings.",
+      "location": {
+        "lat": 23.344,
+        "long": 85.309,
+        "address": "Railway Colony"
+      },
+      "primaryDomain": null,
+      "secondaryDomains": [],
+      "subcategory": null
+    },
+    "problem_b": {
+      "problemId": "P1042",
+      "title": "Unsafe railway pedestrian overbridge",
+      "description": "Rusted footover bridge across railway tracks is dangerous for pedestrians with broken steps.",
+      "location": {
+        "lat": 23.3442,
+        "long": 85.3092,
+        "address": "Railway Colony"
+      },
+      "primaryDomain": null,
+      "secondaryDomains": [],
+      "subcategory": null
+    }
+  },
+  {
+    "case_id": "CASE-022",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P1043",
+      "title": "Stray dog pack attacking commuters near park",
+      "description": "Group of aggressive stray dogs biting pedestrians near green park entrance.",
+      "location": {
+        "lat": 23.351,
+        "long": 85.315,
+        "address": "Green Park"
+      },
+      "primaryDomain": "Public Safety",
+      "secondaryDomains": [
+        "Public Health"
+      ],
+      "subcategory": "Animal Menace"
+    },
+    "problem_b": {
+      "problemId": "P1044",
+      "title": "Dangerous stray dogs near park gate",
+      "description": "Pack of feral street dogs harassing and attacking people walking near green park.",
+      "location": {
+        "lat": 23.3512,
+        "long": 85.3152,
+        "address": "Green Park"
+      },
+      "primaryDomain": "Public Safety",
+      "secondaryDomains": [
+        "Public Health"
+      ],
+      "subcategory": "Animal Menace"
+    }
+  },
+  {
+    "case_id": "CASE-023",
+    "category": "borderline_similarity",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P1045",
+      "title": "Drainage canal blocked with plastic debris",
+      "description": "Major stormwater drain clogged with single-use plastic bottles preventing rainwater flow.",
+      "location": {
+        "lat": 23.355,
+        "long": 85.32,
+        "address": "Drainage Lane"
+      },
+      "primaryDomain": "Water & Sanitation",
+      "secondaryDomains": [
+        "Environment"
+      ],
+      "subcategory": "Drainage Maintenance"
+    },
+    "problem_b": {
+      "problemId": "P1046",
+      "title": "Plastic bottle recycling center shut down",
+      "description": "Private plastic bottle recycling unit closed operations leaving plastic scrap piles.",
+      "location": {
+        "lat": 23.355,
+        "long": 85.32,
+        "address": "Drainage Lane"
+      },
+      "primaryDomain": "Environment",
+      "secondaryDomains": [
+        "Economy"
+      ],
+      "subcategory": "Recycling Operations"
+    }
+  },
+  {
+    "case_id": "CASE-024",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P1047",
+      "title": "Low voltage burning household appliances",
+      "description": "Severe voltage fluctuation in residential area blowing out refrigerators and fans.",
+      "location": {
+        "lat": 23.371,
+        "long": 85.341,
+        "address": "Housing Colony B"
+      },
+      "primaryDomain": "Energy & Power",
+      "secondaryDomains": [
+        "Infrastructure"
+      ],
+      "subcategory": "Voltage Fluctuation"
+    },
+    "problem_b": {
+      "problemId": "P1048",
+      "title": "Extreme voltage drops destroying electronic items",
+      "description": "Continuous low voltage spikes in housing colony damaging home electrical equipment.",
+      "location": {
+        "lat": 23.3712,
+        "long": 85.3413,
+        "address": "Housing Colony B"
+      },
+      "primaryDomain": "Energy & Power",
+      "secondaryDomains": [
+        "Infrastructure"
+      ],
+      "subcategory": "Voltage Fluctuation"
+    }
+  },
+  {
+    "case_id": "CASE-025",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P1049",
+      "title": "Primary school teacher absenteeism",
+      "description": "Appointed government teachers rarely attending classes in rural primary school.",
+      "location": {
+        "lat": 23.381,
+        "long": 85.351,
+        "address": "Rural School"
+      },
+      "primaryDomain": "Education",
+      "secondaryDomains": [
+        "Governance"
+      ],
+      "subcategory": "Teacher Staffing"
+    },
+    "problem_b": {
+      "problemId": "P1050",
+      "title": "Teachers missing from rural primary school",
+      "description": "Government school teachers remain absent frequently leaving students unsupervised.",
+      "location": {
+        "lat": 23.3811,
+        "long": 85.3512,
+        "address": "Rural School"
+      },
+      "primaryDomain": "Education",
+      "secondaryDomains": [
+        "Governance"
+      ],
+      "subcategory": "Teacher Staffing"
+    }
+  },
+  {
+    "case_id": "CASE-026",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P20026",
+      "title": "Dengue outbreak due to stagnant water in ditch",
+      "description": "Dengue outbreak due to stagnant water in ditch reported by local resident.",
+      "location": {
+        "lat": 23.34,
+        "long": 85.31,
+        "address": "Location CASE-026"
+      },
+      "primaryDomain": "Health",
+      "secondaryDomains": [],
+      "subcategory": "Vector Control"
+    },
+    "problem_b": {
+      "problemId": "P30026",
+      "title": "Stagnant rainwater in roadside trench breeding mosquitoes causing dengue",
+      "description": "Stagnant rainwater in roadside trench breeding mosquitoes causing dengue observed in the neighborhood.",
+      "location": {
+        "lat": 23.341,
+        "long": 85.311,
+        "address": "Location CASE-026"
+      },
+      "primaryDomain": "Health",
+      "secondaryDomains": [],
+      "subcategory": "Vector Control"
+    }
+  },
+  {
+    "case_id": "CASE-027",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P20027",
+      "title": "Broken playground equipment in municipal park",
+      "description": "Broken playground equipment in municipal park reported by local resident.",
+      "location": {
+        "lat": 23.35,
+        "long": 85.32,
+        "address": "Location CASE-027"
+      },
+      "primaryDomain": "Infrastructure",
+      "secondaryDomains": [],
+      "subcategory": "Public Parks"
+    },
+    "problem_b": {
+      "problemId": "P30027",
+      "title": "Damaged children slides and rusty swings in public park posing injury risk",
+      "description": "Damaged children slides and rusty swings in public park posing injury risk observed in the neighborhood.",
+      "location": {
+        "lat": 23.351000000000003,
+        "long": 85.321,
+        "address": "Location CASE-027"
+      },
+      "primaryDomain": "Infrastructure",
+      "secondaryDomains": [],
+      "subcategory": "Public Parks"
+    }
+  },
+  {
+    "case_id": "CASE-028",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P20028",
+      "title": "Delayed midday meal supply in elementary school",
+      "description": "Delayed midday meal supply in elementary school reported by local resident.",
+      "location": {
+        "lat": 23.36,
+        "long": 85.33,
+        "address": "Location CASE-028"
+      },
+      "primaryDomain": "Education",
+      "secondaryDomains": [],
+      "subcategory": "School Nutrition"
+    },
+    "problem_b": {
+      "problemId": "P30028",
+      "title": "School children not receiving midday meals on time due to vendor failure",
+      "description": "School children not receiving midday meals on time due to vendor failure observed in the neighborhood.",
+      "location": {
+        "lat": 23.361,
+        "long": 85.331,
+        "address": "Location CASE-028"
+      },
+      "primaryDomain": "Education",
+      "secondaryDomains": [],
+      "subcategory": "School Nutrition"
+    }
+  },
+  {
+    "case_id": "CASE-029",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P20029",
+      "title": "Encroachment of public footpath by illegal stalls",
+      "description": "Encroachment of public footpath by illegal stalls reported by local resident.",
+      "location": {
+        "lat": 23.37,
+        "long": 85.34,
+        "address": "Location CASE-029"
+      },
+      "primaryDomain": "Urban Planning",
+      "secondaryDomains": [],
+      "subcategory": "Encroachment"
+    },
+    "problem_b": {
+      "problemId": "P30029",
+      "title": "Footpath completely blocked by unauthorized hawker shops forcing pedestrians onto road",
+      "description": "Footpath completely blocked by unauthorized hawker shops forcing pedestrians onto road observed in the neighborhood.",
+      "location": {
+        "lat": 23.371000000000002,
+        "long": 85.34100000000001,
+        "address": "Location CASE-029"
+      },
+      "primaryDomain": "Urban Planning",
+      "secondaryDomains": [],
+      "subcategory": "Encroachment"
+    }
+  },
+  {
+    "case_id": "CASE-030",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P20030",
+      "title": "Loud commercial speakers blaring past midnight",
+      "description": "Loud commercial speakers blaring past midnight reported by local resident.",
+      "location": {
+        "lat": 23.38,
+        "long": 85.35,
+        "address": "Location CASE-030"
+      },
+      "primaryDomain": "Public Safety",
+      "secondaryDomains": [],
+      "subcategory": "Noise Pollution"
+    },
+    "problem_b": {
+      "problemId": "P30030",
+      "title": "Commercial event venue playing loud music beyond permissible night hours",
+      "description": "Commercial event venue playing loud music beyond permissible night hours observed in the neighborhood.",
+      "location": {
+        "lat": 23.381,
+        "long": 85.351,
+        "address": "Location CASE-030"
+      },
+      "primaryDomain": "Public Safety",
+      "secondaryDomains": [],
+      "subcategory": "Noise Pollution"
+    }
+  },
+  {
+    "case_id": "CASE-031",
+    "category": "same_domain_different_issue",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P20031",
+      "title": "Broken playground equipment in municipal park",
+      "description": "Broken playground equipment in municipal park reported by local resident.",
+      "location": {
+        "lat": 23.35,
+        "long": 85.32,
+        "address": "Location CASE-031"
+      },
+      "primaryDomain": "Infrastructure",
+      "secondaryDomains": [],
+      "subcategory": "Public Parks"
+    },
+    "problem_b": {
+      "problemId": "P30031",
+      "title": "Park boundary wall damaged allowing stray cattle inside",
+      "description": "Park boundary wall damaged allowing stray cattle inside observed in the neighborhood.",
+      "location": {
+        "lat": 23.85,
+        "long": 85.82,
+        "address": "Location CASE-031"
+      },
+      "primaryDomain": "Infrastructure",
+      "secondaryDomains": [],
+      "subcategory": "Other"
+    }
+  },
+  {
+    "case_id": "CASE-032",
+    "category": "same_domain_different_issue",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P20032",
+      "title": "Delayed midday meal supply in elementary school",
+      "description": "Delayed midday meal supply in elementary school reported by local resident.",
+      "location": {
+        "lat": 23.36,
+        "long": 85.33,
+        "address": "Location CASE-032"
+      },
+      "primaryDomain": "Education",
+      "secondaryDomains": [],
+      "subcategory": "Sanitation"
+    },
+    "problem_b": {
+      "problemId": "P30032",
+      "title": "School drinking water filter broken causing stomach infections",
+      "description": "School drinking water filter broken causing stomach infections observed in the neighborhood.",
+      "location": {
+        "lat": 23.86,
+        "long": 85.83,
+        "address": "Location CASE-032"
+      },
+      "primaryDomain": "Education",
+      "secondaryDomains": [],
+      "subcategory": "Other"
+    }
+  },
+  {
+    "case_id": "CASE-033",
+    "category": "same_domain_different_issue",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P20033",
+      "title": "Encroachment of public footpath by illegal stalls",
+      "description": "Encroachment of public footpath by illegal stalls reported by local resident.",
+      "location": {
+        "lat": 23.37,
+        "long": 85.34,
+        "address": "Location CASE-033"
+      },
+      "primaryDomain": "Urban Planning",
+      "secondaryDomains": [],
+      "subcategory": "Pedestrian Walkway"
+    },
+    "problem_b": {
+      "problemId": "P30033",
+      "title": "Pavement tiles broken causing tripping hazard",
+      "description": "Pavement tiles broken causing tripping hazard observed in the neighborhood.",
+      "location": {
+        "lat": 23.87,
+        "long": 85.84,
+        "address": "Location CASE-033"
+      },
+      "primaryDomain": "Urban Planning",
+      "secondaryDomains": [],
+      "subcategory": "Other"
+    }
+  },
+  {
+    "case_id": "CASE-034",
+    "category": "same_domain_different_issue",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P20034",
+      "title": "Loud commercial speakers blaring past midnight",
+      "description": "Loud commercial speakers blaring past midnight reported by local resident.",
+      "location": {
+        "lat": 23.38,
+        "long": 85.35,
+        "address": "Location CASE-034"
+      },
+      "primaryDomain": "Public Safety",
+      "secondaryDomains": [],
+      "subcategory": "Air Pollution"
+    },
+    "problem_b": {
+      "problemId": "P30034",
+      "title": "Exhaust fumes from generator set behind venue",
+      "description": "Exhaust fumes from generator set behind venue observed in the neighborhood.",
+      "location": {
+        "lat": 23.88,
+        "long": 85.85,
+        "address": "Location CASE-034"
+      },
+      "primaryDomain": "Public Safety",
+      "secondaryDomains": [],
+      "subcategory": "Other"
+    }
+  },
+  {
+    "case_id": "CASE-035",
+    "category": "same_domain_different_issue",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P20035",
+      "title": "Dengue outbreak due to stagnant water in ditch",
+      "description": "Dengue outbreak due to stagnant water in ditch reported by local resident.",
+      "location": {
+        "lat": 23.34,
+        "long": 85.31,
+        "address": "Location CASE-035"
+      },
+      "primaryDomain": "Health",
+      "secondaryDomains": [],
+      "subcategory": "Medical Supplies"
+    },
+    "problem_b": {
+      "problemId": "P30035",
+      "title": "Municipal hospital lacking dengue testing kits",
+      "description": "Municipal hospital lacking dengue testing kits observed in the neighborhood.",
+      "location": {
+        "lat": 23.84,
+        "long": 85.81,
+        "address": "Location CASE-035"
+      },
+      "primaryDomain": "Health",
+      "secondaryDomains": [],
+      "subcategory": "Other"
+    }
+  },
+  {
+    "case_id": "CASE-036",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P20036",
+      "title": "Clogged culvert causing street flooding during rain",
+      "description": "Clogged culvert causing street flooding during rain reported by local resident.",
+      "location": {
+        "lat": 23.39,
+        "long": 85.36,
+        "address": "Location CASE-036"
+      },
+      "primaryDomain": "Infrastructure",
+      "secondaryDomains": [],
+      "subcategory": "Drainage"
+    },
+    "problem_b": {
+      "problemId": "P30036",
+      "title": "Waterlogging on road due to blocked storm culvert",
+      "description": "Waterlogging on road due to blocked storm culvert observed in the neighborhood.",
+      "location": {
+        "lat": 23.391000000000002,
+        "long": 85.361,
+        "address": "Location CASE-036"
+      },
+      "primaryDomain": "Infrastructure",
+      "secondaryDomains": [],
+      "subcategory": "Drainage"
+    }
+  },
+  {
+    "case_id": "CASE-037",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P20037",
+      "title": "Public handpump handle broken in Harijan Basti",
+      "description": "Public handpump handle broken in Harijan Basti reported by local resident.",
+      "location": {
+        "lat": 23.4,
+        "long": 85.37,
+        "address": "Location CASE-037"
+      },
+      "primaryDomain": "Water & Sanitation",
+      "secondaryDomains": [],
+      "subcategory": "Handpump"
+    },
+    "problem_b": {
+      "problemId": "P30037",
+      "title": "Community handpump out of order due to snapped handle",
+      "description": "Community handpump out of order due to snapped handle observed in the neighborhood.",
+      "location": {
+        "lat": 23.401,
+        "long": 85.37100000000001,
+        "address": "Location CASE-037"
+      },
+      "primaryDomain": "Water & Sanitation",
+      "secondaryDomains": [],
+      "subcategory": "Handpump"
+    }
+  },
+  {
+    "case_id": "CASE-038",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P20038",
+      "title": "Illegal sand mining in riverbed damaging embankment",
+      "description": "Illegal sand mining in riverbed damaging embankment reported by local resident.",
+      "location": {
+        "lat": 23.41,
+        "long": 85.38,
+        "address": "Location CASE-038"
+      },
+      "primaryDomain": "Environment",
+      "secondaryDomains": [],
+      "subcategory": "Illegal Mining"
+    },
+    "problem_b": {
+      "problemId": "P30038",
+      "title": "Unlawful extraction of river sand causing bank erosion",
+      "description": "Unlawful extraction of river sand causing bank erosion observed in the neighborhood.",
+      "location": {
+        "lat": 23.411,
+        "long": 85.381,
+        "address": "Location CASE-038"
+      },
+      "primaryDomain": "Environment",
+      "secondaryDomains": [],
+      "subcategory": "Illegal Mining"
+    }
+  },
+  {
+    "case_id": "CASE-039",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P20039",
+      "title": "Public library closed during declared opening hours",
+      "description": "Public library closed during declared opening hours reported by local resident.",
+      "location": {
+        "lat": 23.42,
+        "long": 85.39,
+        "address": "Location CASE-039"
+      },
+      "primaryDomain": "Culture & Civic",
+      "secondaryDomains": [],
+      "subcategory": "Public Services"
+    },
+    "problem_b": {
+      "problemId": "P30039",
+      "title": "Municipal library locked during official working shift",
+      "description": "Municipal library locked during official working shift observed in the neighborhood.",
+      "location": {
+        "lat": 23.421000000000003,
+        "long": 85.391,
+        "address": "Location CASE-039"
+      },
+      "primaryDomain": "Culture & Civic",
+      "secondaryDomains": [],
+      "subcategory": "Public Services"
+    }
+  },
+  {
+    "case_id": "CASE-040",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P20040",
+      "title": "Shortage of ambulances at district hospital",
+      "description": "Shortage of ambulances at district hospital reported by local resident.",
+      "location": {
+        "lat": 23.43,
+        "long": 85.4,
+        "address": "Location CASE-040"
+      },
+      "primaryDomain": "Healthcare",
+      "secondaryDomains": [],
+      "subcategory": "Emergency Services"
+    },
+    "problem_b": {
+      "problemId": "P30040",
+      "title": "District hospital has insufficient emergency response vehicles",
+      "description": "District hospital has insufficient emergency response vehicles observed in the neighborhood.",
+      "location": {
+        "lat": 23.431,
+        "long": 85.40100000000001,
+        "address": "Location CASE-040"
+      },
+      "primaryDomain": "Healthcare",
+      "secondaryDomains": [],
+      "subcategory": "Emergency Services"
+    }
+  },
+  {
+    "case_id": "CASE-041",
+    "category": "different_domain",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P20041",
+      "title": "Clogged culvert causing street flooding during rain",
+      "description": "Clogged culvert causing street flooding during rain reported by local resident.",
+      "location": {
+        "lat": 23.39,
+        "long": 85.36,
+        "address": "Location CASE-041"
+      },
+      "primaryDomain": "Infrastructure",
+      "secondaryDomains": [],
+      "subcategory": "Public Services"
+    },
+    "problem_b": {
+      "problemId": "P30041",
+      "title": "Public library closed during declared opening hours",
+      "description": "Public library closed during declared opening hours observed in the neighborhood.",
+      "location": {
+        "lat": 23.89,
+        "long": 85.86,
+        "address": "Location CASE-041"
+      },
+      "primaryDomain": "Other",
+      "secondaryDomains": [],
+      "subcategory": "Other"
+    }
+  },
+  {
+    "case_id": "CASE-042",
+    "category": "different_domain",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P20042",
+      "title": "Public handpump handle broken in Harijan Basti",
+      "description": "Public handpump handle broken in Harijan Basti reported by local resident.",
+      "location": {
+        "lat": 23.4,
+        "long": 85.37,
+        "address": "Location CASE-042"
+      },
+      "primaryDomain": "Water & Sanitation",
+      "secondaryDomains": [],
+      "subcategory": "Environment"
+    },
+    "problem_b": {
+      "problemId": "P30042",
+      "title": "Illegal sand mining in riverbed damaging embankment",
+      "description": "Illegal sand mining in riverbed damaging embankment observed in the neighborhood.",
+      "location": {
+        "lat": 23.9,
+        "long": 85.87,
+        "address": "Location CASE-042"
+      },
+      "primaryDomain": "Other",
+      "secondaryDomains": [],
+      "subcategory": "Other"
+    }
+  },
+  {
+    "case_id": "CASE-043",
+    "category": "different_domain",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P20043",
+      "title": "Shortage of ambulances at district hospital",
+      "description": "Shortage of ambulances at district hospital reported by local resident.",
+      "location": {
+        "lat": 23.43,
+        "long": 85.4,
+        "address": "Location CASE-043"
+      },
+      "primaryDomain": "Healthcare",
+      "secondaryDomains": [],
+      "subcategory": "Public Safety"
+    },
+    "problem_b": {
+      "problemId": "P30043",
+      "title": "Loud commercial speakers blaring past midnight",
+      "description": "Loud commercial speakers blaring past midnight observed in the neighborhood.",
+      "location": {
+        "lat": 23.93,
+        "long": 85.9,
+        "address": "Location CASE-043"
+      },
+      "primaryDomain": "Other",
+      "secondaryDomains": [],
+      "subcategory": "Other"
+    }
+  },
+  {
+    "case_id": "CASE-044",
+    "category": "different_domain",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P20044",
+      "title": "Subsidized rice missing from ration shop",
+      "description": "Subsidized rice missing from ration shop reported by local resident.",
+      "location": {
+        "lat": 23.44,
+        "long": 85.41,
+        "address": "Location CASE-044"
+      },
+      "primaryDomain": "Governance",
+      "secondaryDomains": [],
+      "subcategory": "Energy & Power"
+    },
+    "problem_b": {
+      "problemId": "P30044",
+      "title": "Electric wire hanging dangerously low near market",
+      "description": "Electric wire hanging dangerously low near market observed in the neighborhood.",
+      "location": {
+        "lat": 23.94,
+        "long": 85.91,
+        "address": "Location CASE-044"
+      },
+      "primaryDomain": "Other",
+      "secondaryDomains": [],
+      "subcategory": "Other"
+    }
+  },
+  {
+    "case_id": "CASE-045",
+    "category": "different_domain",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P20045",
+      "title": "Public toilet building locked for months",
+      "description": "Public toilet building locked for months reported by local resident.",
+      "location": {
+        "lat": 23.45,
+        "long": 85.42,
+        "address": "Location CASE-045"
+      },
+      "primaryDomain": "Sanitation",
+      "secondaryDomains": [],
+      "subcategory": "Infrastructure"
+    },
+    "problem_b": {
+      "problemId": "P30045",
+      "title": "Bridges over canal has loose concrete guard rails",
+      "description": "Bridges over canal has loose concrete guard rails observed in the neighborhood.",
+      "location": {
+        "lat": 23.95,
+        "long": 85.92,
+        "address": "Location CASE-045"
+      },
+      "primaryDomain": "Other",
+      "secondaryDomains": [],
+      "subcategory": "Other"
+    }
+  },
+  {
+    "case_id": "CASE-046",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P20046",
+      "title": "Subsidized rice missing from ration shop",
+      "description": "Subsidized rice missing from ration shop reported by local resident.",
+      "location": {
+        "lat": 23.44,
+        "long": 85.41,
+        "address": "Location CASE-046"
+      },
+      "primaryDomain": "Governance",
+      "secondaryDomains": [],
+      "subcategory": "Public Distribution"
+    },
+    "problem_b": {
+      "problemId": "P30046",
+      "title": "Fair price shop owner denying ration grain to cardholders",
+      "description": "Fair price shop owner denying ration grain to cardholders observed in the neighborhood.",
+      "location": {
+        "lat": 23.441000000000003,
+        "long": 85.411,
+        "address": "Location CASE-046"
+      },
+      "primaryDomain": "Governance",
+      "secondaryDomains": [],
+      "subcategory": "Public Distribution"
+    }
+  },
+  {
+    "case_id": "CASE-047",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P20047",
+      "title": "Public toilet building locked for months",
+      "description": "Public toilet building locked for months reported by local resident.",
+      "location": {
+        "lat": 23.45,
+        "long": 85.42,
+        "address": "Location CASE-047"
+      },
+      "primaryDomain": "Sanitation",
+      "secondaryDomains": [],
+      "subcategory": "Public Sanitation"
+    },
+    "problem_b": {
+      "problemId": "P30047",
+      "title": "Community restroom facility kept locked by caretaker",
+      "description": "Community restroom facility kept locked by caretaker observed in the neighborhood.",
+      "location": {
+        "lat": 23.451,
+        "long": 85.421,
+        "address": "Location CASE-047"
+      },
+      "primaryDomain": "Sanitation",
+      "secondaryDomains": [],
+      "subcategory": "Public Sanitation"
+    }
+  },
+  {
+    "case_id": "CASE-048",
+    "category": "paraphrased_duplicate",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P20048",
+      "title": "Electric wire hanging dangerously low near market",
+      "description": "Electric wire hanging dangerously low near market reported by local resident.",
+      "location": {
+        "lat": 23.46,
+        "long": 85.43,
+        "address": "Location CASE-048"
+      },
+      "primaryDomain": "Energy & Power",
+      "secondaryDomains": [],
+      "subcategory": "Electrical Safety"
+    },
+    "problem_b": {
+      "problemId": "P30048",
+      "title": "Overhead high voltage wire sagging close to street vendor stalls",
+      "description": "Overhead high voltage wire sagging close to street vendor stalls observed in the neighborhood.",
+      "location": {
+        "lat": 23.461000000000002,
+        "long": 85.43100000000001,
+        "address": "Location CASE-048"
+      },
+      "primaryDomain": "Energy & Power",
+      "secondaryDomains": [],
+      "subcategory": "Electrical Safety"
+    }
+  },
+  {
+    "case_id": "CASE-049",
+    "category": "borderline_similarity",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P20049",
+      "title": "Public toilet building locked for months",
+      "description": "Public toilet building locked for months reported by local resident.",
+      "location": {
+        "lat": 23.45,
+        "long": 85.42,
+        "address": "Location CASE-049"
+      },
+      "primaryDomain": "Sanitation",
+      "secondaryDomains": [],
+      "subcategory": "Waste Treatment"
+    },
+    "problem_b": {
+      "problemId": "P30049",
+      "title": "Sewage treatment plant maintenance overhaul",
+      "description": "Sewage treatment plant maintenance overhaul observed in the neighborhood.",
+      "location": {
+        "lat": 23.95,
+        "long": 85.92,
+        "address": "Location CASE-049"
+      },
+      "primaryDomain": "Sanitation",
+      "secondaryDomains": [],
+      "subcategory": "Other"
+    }
+  },
+  {
+    "case_id": "CASE-050",
+    "category": "borderline_similarity",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P20050",
+      "title": "Subsidized rice missing from ration shop",
+      "description": "Subsidized rice missing from ration shop reported by local resident.",
+      "location": {
+        "lat": 23.44,
+        "long": 85.41,
+        "address": "Location CASE-050"
+      },
+      "primaryDomain": "Governance",
+      "secondaryDomains": [],
+      "subcategory": "Agriculture Procurement"
+    },
+    "problem_b": {
+      "problemId": "P30050",
+      "title": "Wheat crop harvest procurement center opened",
+      "description": "Wheat crop harvest procurement center opened observed in the neighborhood.",
+      "location": {
+        "lat": 23.94,
+        "long": 85.91,
+        "address": "Location CASE-050"
+      },
+      "primaryDomain": "Governance",
+      "secondaryDomains": [],
+      "subcategory": "Other"
+    }
+  }
+]

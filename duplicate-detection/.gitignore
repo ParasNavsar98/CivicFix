@@ -1,0 +1,28 @@
+# Environment variables
+.env
+.env.local
+
+# Python cache & bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest & Coverage cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+
+# HuggingFace & SentenceTransformers model caches
+.cache/
+huggingface/
