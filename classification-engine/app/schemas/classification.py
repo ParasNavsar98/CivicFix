@@ -180,7 +180,10 @@ class ClassificationResult(BaseModel):
 
     problemSummary: str = Field(..., description="Concise summary of the reported problem")
     primaryDomain: str = Field(..., description="Primary domain from controlled taxonomy")
-    secondaryDomains: List[str] = Field(default_factory=list, description="Secondary relevant domains")
+    secondaryDomains: List[str] = Field(
+        default_factory=list,
+        description="List of valid primary domain taxonomy keys for distinct evidence-supported secondary problems (e.g. ['Education']). Return [] if none.",
+    )
     subcategory: str = Field(..., description="Subcategory belonging to primary domain")
     severity: SeverityEnum = Field(..., description="Severity level")
     severityAssessment: SeverityAssessment = Field(

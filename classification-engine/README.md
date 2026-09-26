@@ -1,341 +1,463 @@
-# Societal Innovation Portal - Standalone AI Classification Engine
+# CivicFix Classification Engine
 
-The **AI Classification Engine** is a production-quality, modular Python microservice built with **FastAPI**, **Pydantic v2**, and **Ollama (Gemma 3 4B)** as its sole local LLM backend. It receives unstructured societal problem submissions from citizens and produces structured, standardized AI classifications.
-
----
-
-## 1. Project Purpose
-Citizens report societal problems in unstructured text (e.g. "Garbage burning near school", "Water pipeline leakage"). The engine analyzes the text, assigns it to a controlled 12-domain taxonomy, determines severity and urgency, identifies required expertise/resources, assesses whether research or government action is needed, and calculates an AI confidence estimate.
-
-The engine is **AI-assisted**: it recommends classifications and flags low-confidence or ambiguous submissions for human review (`review_required`), ensuring AI never makes irreversible real-world decisions automatically.
+Standalone AI classification microservice for citizen-reported civic and societal problems. Built with **FastAPI**, **Pydantic v2**, and **Ollama (Gemma 3 4B)**.
 
 ---
 
-## 2. High-Level Architecture
+## 1. Purpose
+
+The **CivicFix Classification Engine** is a dedicated, independent AI service designed to structure, categorize, and evaluate unstructured problem reports submitted by citizens. It converts raw natural-language titles and descriptions (e.g. *"Damaged school toilets causing students to miss classes"*) into standardized, machine-readable JSON classifications adhering to a controlled 12-domain societal taxonomy.
+
+The service is strictly **AI-assisted**: high-confidence classifications (`confidence >= 0.85`) receive status `classified`, while lower-confidence or vague submissions receive status `review_required` to flag them for human oversight.
+
+---
+
+## 2. Responsibilities
+
+The Classification Engine handles:
+
+- **Problem Summarization**: Generating a concise 1-2 sentence structured summary (`problemSummary`).
+- **Primary Domain Classification**: Assigning the core root physical cause to one of 12 controlled primary taxonomy domains (`primaryDomain`).
+- **Subcategory Classification**: Selecting a valid subcategory belonging strictly to the chosen primary domain (`subcategory`).
+- **Secondary Domain Classification**: Identifying evidence-supported distinct secondary issues belonging to other taxonomy domains (`secondaryDomains`).
+- **Severity Assessment**: Evaluating 9 qualitative severity factors strictly from explicit submission evidence (`severityAssessment`).
+- **Severity Evidence**: Extracting supporting evidence statements from the citizen report (`severityEvidence`).
+- **People Affected Extraction**: Extracting explicit counts, units, and sources without converting reported units (`peopleAffected`).
+- **Urgency Assessment**: Assigning overall urgency separate from severity (`urgency`).
+- **Research Required Decision**: Determining if novel technology, R&D, or experimentation is needed (`researchRequired`).
+- **Government Action Possible**: Assessing if public/municipal authority intervention can resolve the issue (`governmentActionPossible`).
+- **Required Expertise & Resources**: Recommending technical skills and resources (`requiredExpertise`, `requiredResources`).
+- **Confidence Evaluation**: Calculating a normalized score between `0.0` and `1.0` (`confidence`).
+- **Reasoning**: Providing explicit justification for classification decisions (`reasoning`).
+- **Taxonomy & Business Validation**: Enforcing strict schema and domain/subcategory constraints.
+- **Review Decision Boundary**: Flagging vague or low-confidence reports for human review (`review_required`).
+
+---
+
+## 3. Architecture
+
 ```text
-Citizen Problem
-      │
-      ▼
-FastAPI /classify
-      │
-      ▼
-Input Validation (Pydantic v2)
-      │
-      ▼
-Text Preprocessing (Normalization)
-      │
-      ▼
-Taxonomy Loading (12 Controlled Domains)
-      │
-      ▼
-Classification Prompt Construction
-      │
-      ▼
-LLMProvider (Ollama Local API / Gemma 3 4B)
-      │
-      ▼
-Pydantic Schema & Business Rule Validation
-      │
-      ▼
-Confidence & Safeguards Evaluation Engine
-      ├──────────────────────────────┐
-      ▼                              ▼
-High Confidence (>= 0.85)     Low Confidence (< 0.85)
-      │                              │
-      ▼                              ▼
-   classified                  review_required
-      └──────────────┬───────────────┘
-                     ▼
-             Final API Response
+POST /classify (Citizen Input)
+    │
+    ▼
+1. Pydantic Input Validation (ProblemClassificationInput)
+    │
+    ▼
+2. Input Preprocessing & Sanitization (preprocessor.py)
+    │
+    ▼
+3. Taxonomy-Aware Prompt Construction (build_classification_prompt)
+    │
+    ▼
+4. LLM Execution via Ollama (Gemma 3 4B / gemma3:4b)
+    │
+    ▼
+5. Structured JSON Parsing & Pydantic Validation (ClassificationResult)
+    │
+    ▼
+6. Business & Taxonomy Validation (validate_taxonomy_rules)
+    │
+    ▼
+7. Evidence-Based Secondary Domain Safeguard (extract_evidence_based_secondary_domains)
+    │
+    ▼
+8. Evidence Sufficiency & Ambiguity Safeguards (is_evidence_sufficient, detect_ambiguity)
+    │
+    ▼
+9. Confidence Threshold Evaluation (evaluate_confidence)
+    │
+    ├──────────────────────────────┐
+    ▼                              ▼
+High Confidence (>= 0.85)     Low Confidence (< 0.85) or Ambiguous
+    │                              │
+    ▼                              ▼
+ status: "classified"          status: "review_required"
+    └──────────────┬───────────────┘
+                   ▼
+       JSON Response (ClassificationResponse)
 ```
 
 ---
 
-## 3. Technology Stack
-- **Language**: Python 3.11+
-- **Web Framework**: FastAPI
-- **Data Validation**: Pydantic v2 & Pydantic-Settings
-- **LLM Backend**: Ollama with **Gemma 3 4B** (`gemma3:4b` running locally)
-- **HTTP Client**: `httpx` (Async timeout & exponential backoff retries)
-- **Environment Management**: `python-dotenv`
-- **Testing**: `pytest`, `pytest-asyncio`
+## 4. Project Structure
 
----
-
-## 4. Folder Structure
 ```text
 classification-engine/
 │
 ├── app/
 │   ├── __init__.py
-│   ├── main.py                  # FastAPI application & HTTP endpoints
-│   ├── config.py                # Centralized Pydantic configuration
+│   ├── main.py                  # FastAPI entry point, exception handlers & routing
+│   ├── config.py                # Centralized Pydantic configuration settings
 │   │
-│   ├── schemas/                 # Pydantic data contracts
+│   ├── schemas/                 # Data contracts & validation models
 │   │   ├── __init__.py
-│   │   ├── input.py             # Citizen input validation model
-│   │   └── classification.py    # Output result and response schemas
+│   │   ├── input.py             # Citizen submission input schema
+│   │   └── classification.py    # Structured result & response schemas
 │   │
-│   ├── services/                # Core business logic
+│   ├── services/                # Core business & evaluation logic
 │   │   ├── __init__.py
-│   │   ├── preprocessor.py     # Input sanitization & normalization
-│   │   ├── classifier.py       # Orchestration & taxonomy validation
-│   │   └── confidence.py       # Threshold confidence evaluation engine
+│   │   ├── preprocessor.py      # Input sanitization & normalization
+│   │   ├── classifier.py        # Pipeline orchestrator & taxonomy validator
+│   │   └── confidence.py        # Confidence thresholding & status evaluator
 │   │
-│   ├── ai/                      # LLM Provider integration
+│   ├── ai/                      # LLM Provider integrations
 │   │   ├── __init__.py
-│   │   ├── provider.py         # Abstract LLM provider interface
-│   │   ├── ollama.py           # Ollama local API provider
-│   │   └── prompts.py          # Dynamic prompt generator for Gemma 3 4B
+│   │   ├── provider.py          # Abstract LLMProvider interface & exception hierarchy
+│   │   ├── ollama.py            # Local Ollama HTTP client implementation
+│   │   └── prompts.py           # Dynamic prompt builder embedding 12-domain taxonomy
 │   │
-│   └── taxonomy/                # Isolated taxonomy definition
+│   └── taxonomy/                # Controlled domain taxonomy definition
 │       ├── __init__.py
-│       └── taxonomy.py         # 12 controlled primary domains & subcategories
+│       └── taxonomy.py          # 12 primary domains, subcategories & validator functions
 │
-├── tests/                       # Complete automated testing suite
-│   ├── __init__.py
-│   ├── evaluation_dataset.json # 50-item ground truth test dataset
-│   ├── test_api.py
-│   ├── test_classifier.py
-│   ├── test_confidence.py
-│   ├── test_ollama.py
-│   ├── test_precision_and_metrics.py
-│   ├── test_schemas.py
-│   ├── test_security.py
-│   └── test_taxonomy.py
+├── tests/                       # Automated unit, integration & evaluation suite
+│   ├── evaluation_dataset.json  # 50-item ground-truth test dataset
+│   ├── test_api.py              # FastAPI endpoint tests
+│   ├── test_classifier.py       # Classifier service & regression tests (Cases 1-5)
+│   ├── test_confidence.py       # Confidence threshold tests
+│   ├── test_ollama.py           # Ollama provider retry & timeout tests
+│   ├── test_precision_and_metrics.py # Benchmark metrics evaluation
+│   ├── test_schemas.py          # Pydantic schema validation tests
+│   ├── test_security.py         # Prompt injection & input sanitization tests
+│   ├── test_severity_assessment.py # 9-factor severity framework tests
+│   └── test_taxonomy.py         # Taxonomy domain/subcategory validation tests
 │
 ├── .env.example                 # Environment configuration template
-├── .gitignore                   # Git ignore settings
+├── .gitignore                   # Git ignore file
 ├── requirements.txt             # Python dependencies
-└── README.md                    # Service documentation
+└── README.md                    # Component documentation
 ```
 
 ---
 
-## 5. Ollama & Gemma 3 4B Setup
+## 5. Requirements
 
-### Step 1: Install Ollama
-Download and install Ollama on Windows from [https://ollama.com](https://ollama.com).
-
-Verify installation in PowerShell:
-```powershell
-ollama --version
-```
-
-### Step 2: Pull the Gemma 3 4B Model
-Pull the required local model:
-```powershell
-ollama pull gemma3:4b
-```
-
-### Step 3: Verify Installed Models
-List local models to confirm `gemma3:4b` is present:
-```powershell
-ollama list
-```
-
-### Step 4: Test Model Interactively (Optional)
-```powershell
-ollama run gemma3:4b
-```
+- **Python**: 3.11 or higher
+- **Ollama**: Local inference engine ([ollama.com](https://ollama.com))
+- **Model**: Gemma 3 4B (`gemma3:4b`)
 
 ---
 
-## 6. Project Setup & Installation
+## 6. Installation
 
-### Virtual Environment Setup
-```bash
-# Navigate into the project folder
-cd classification-engine
+1. **Clone/Navigate to Component**:
+   ```bash
+   cd classification-engine
+   ```
 
-# Create virtual environment
-python -m venv .venv
+2. **Create and Activate Virtual Environment**:
+   ```powershell
+   # Windows PowerShell:
+   python -m venv .venv
+   .\.venv\Scripts\Activate.ps1
 
-# Activate virtual environment
-# Windows PowerShell:
-.venv\Scripts\Activate.ps1
-# Linux/macOS:
-source .venv/bin/activate
+   # Linux/macOS:
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
 
-# Install Python dependencies
-pip install -r requirements.txt
-```
+3. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Pull Gemma 3 4B Model via Ollama**:
+   ```bash
+   ollama pull gemma3:4b
+   ```
 
 ---
 
-## 7. Environment Variables & Configuration
+## 7. Environment Variables
+
 Copy `.env.example` to `.env`:
 ```bash
 cp .env.example .env
 ```
 
-Default `.env` configuration (Local Ollama mode - No API keys required):
-```env
-OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_MODEL=gemma3:4b
+Configurable parameters (`app/config.py`):
 
-LLM_TIMEOUT_SECONDS=60
-LLM_MAX_RETRIES=3
-
-AI_HIGH_CONFIDENCE_THRESHOLD=0.85
-AI_REVIEW_THRESHOLD=0.60
-```
+| Variable | Default Value | Description |
+|---|---|---|
+| `OLLAMA_BASE_URL` | `http://localhost:11434` | Base URL of local Ollama server |
+| `OLLAMA_MODEL` | `gemma3:4b` | Ollama model identifier |
+| `LLM_TIMEOUT_SECONDS` | `60.0` | HTTP timeout per request in seconds |
+| `LLM_MAX_RETRIES` | `3` | Exponential backoff retry attempts |
+| `AI_HIGH_CONFIDENCE_THRESHOLD` | `0.85` | Minimum confidence for `classified` status |
+| `AI_REVIEW_THRESHOLD` | `0.60` | Minimum threshold for review boundary |
 
 ---
 
-## 8. Running the FastAPI Server
-Start the development server with Uvicorn:
+## 8. Running Independently
+
+Start the service locally on **Port 8000**:
+
 ```bash
-uvicorn app.main:app --reload --port 8000
+uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
-Interactive Swagger API Docs are available at: `http://localhost:8000/docs`.
+
+- **Interactive API Documentation (Swagger UI)**: `http://localhost:8000/docs`
+- **ReDoc**: `http://localhost:8000/redoc`
 
 ---
 
-## 9. API Endpoints & Usage
+## 9. API Specifications
 
-### Health Check
-- **GET `/health`**
-- **Response**: `{"status": "healthy"}`
-> **Note**: `/health` indicates application service status and functions cleanly even if Ollama is temporarily offline.
+### 9.1 GET `/health`
+Health probe for service monitoring.
 
-### Classify Problem
-- **POST `/classify`**
-- **Content-Type**: `application/json`
+**Response**:
+```json
+{
+  "status": "healthy"
+}
+```
 
-#### Example Request (`PowerShell / Invoke-RestMethod`)
-```powershell
-Invoke-RestMethod -Uri "http://localhost:8000/classify" -Method Post -ContentType "application/json" -Body '{
+---
+
+### 9.2 POST `/classify`
+Main classification endpoint. Accepts citizen report JSON and returns structured classification.
+
+#### Request Contract (`ProblemClassificationInput`)
+```json
+{
   "problemId": "P1001",
-  "title": "Garbage burning near school",
-  "description": "People dump garbage near our school and burn it every evening. Harmful smoke and gases affect nearby residents.",
+  "title": "Unsafe school toilets causing students to miss classes",
+  "description": "The government school has severely damaged and unusable toilets. Students are frequently unable to attend classes because there are no functional sanitation facilities. The problem creates both a sanitation failure and a direct education access problem.",
   "location": {
     "district": "Ranchi",
     "state": "Jharkhand",
     "latitude": 23.3441,
     "longitude": 85.3096
   }
-}'
+}
 ```
 
-#### Successful Classification Response (`status: "classified"`)
+#### Successful Response Contract (`ClassificationResponse` — `classified`)
 ```json
 {
   "problemId": "P1001",
   "status": "classified",
   "classification": {
-    "problemSummary": "Open garbage burning near school causing smoke pollution",
-    "primaryDomain": "Environment",
-    "secondaryDomains": ["Sanitation", "Healthcare"],
-    "subcategory": "Pollution",
-    "severity": "HIGH",
+    "problemSummary": "Damaged school toilets are preventing students from attending classes, creating a direct impact on education access.",
+    "primaryDomain": "Sanitation",
+    "secondaryDomains": [
+      "Education"
+    ],
+    "subcategory": "Toilets",
+    "severity": "CRITICAL",
+    "severityAssessment": {
+      "healthSafetyImpact": "HIGH",
+      "exposureScope": "COMMUNITY",
+      "vulnerablePopulationExposure": "CLEAR",
+      "geographicExtent": "LOCAL_AREA",
+      "duration": "ONGOING",
+      "infrastructureImpact": "CRITICAL",
+      "environmentalImpact": "NONE",
+      "socialEconomicImpact": "HIGH",
+      "reversibility": "DIFFICULT_TO_RECOVER"
+    },
+    "severityEvidence": [
+      "Government school has severely damaged and unusable toilets.",
+      "Students are frequently unable to attend classes because there are no functional sanitation facilities."
+    ],
+    "peopleAffected": {
+      "value": null,
+      "unit": null,
+      "source": "NOT_PROVIDED"
+    },
     "urgency": "HIGH",
     "researchRequired": false,
     "governmentActionPossible": true,
     "requiredExpertise": [
-      "Waste Management",
-      "Environmental Engineering"
+      "Sanitation Engineering",
+      "Construction Management"
     ],
     "requiredResources": [
-      "Waste collection vehicles",
-      "Pollution monitoring"
+      "Construction Materials",
+      "Labor"
     ],
-    "confidence": 0.91,
-    "reasoning": "Outdoor burning of waste near a school creates acute environmental pollution."
+    "confidence": 0.95,
+    "reasoning": "The core problem is unusable toilets (Sanitation/Toilets). This directly impacts student attendance and education (Education)."
   },
   "error": null
 }
 ```
 
-#### Low Confidence Response (`status: "review_required"`)
+#### Low Confidence / Ambiguous Response (`review_required`)
 ```json
 {
   "problemId": "P1002",
   "status": "review_required",
   "classification": {
-    "problemSummary": "Unclear village problem",
+    "problemSummary": "Unclear problem reported in village",
     "primaryDomain": "Other",
     "secondaryDomains": [],
     "subcategory": "Unclassified",
     "severity": "LOW",
+    "severityAssessment": {
+      "healthSafetyImpact": "UNKNOWN",
+      "exposureScope": "UNKNOWN",
+      "vulnerablePopulationExposure": "NONE_IDENTIFIED",
+      "geographicExtent": "UNKNOWN",
+      "duration": "UNKNOWN",
+      "infrastructureImpact": "NONE",
+      "environmentalImpact": "NONE",
+      "socialEconomicImpact": "NONE",
+      "reversibility": "UNKNOWN"
+    },
+    "severityEvidence": [],
+    "peopleAffected": {
+      "value": null,
+      "unit": null,
+      "source": "NOT_PROVIDED"
+    },
     "urgency": "LOW",
     "researchRequired": false,
     "governmentActionPossible": false,
     "requiredExpertise": [],
     "requiredResources": [],
     "confidence": 0.40,
-    "reasoning": "Input lacks actionable details."
+    "reasoning": "Input description is too vague to determine a specific domain or severity."
   },
   "error": null
 }
 ```
 
-#### Controlled Provider Error Response (`status: "failed"`)
+#### Error Response (`failed`)
 ```json
 {
   "problemId": "P1003",
   "status": "failed",
   "classification": null,
   "error": {
-    "errorCode": "AI_PROVIDER_UNAVAILABLE",
-    "message": "Unable to connect to Ollama. Make sure Ollama is running at http://localhost:11434."
+    "errorCode": "INVALID_TAXONOMY_CATEGORY",
+    "message": "Invalid primary domain 'InvalidDomain'. Must be one of controlled taxonomy domains."
   }
 }
 ```
 
 ---
 
-## 10. Troubleshooting
+## 10. Taxonomy Structure
 
-### Ollama Not Running (`AI_PROVIDER_UNAVAILABLE`)
-If `/classify` returns `AI_PROVIDER_UNAVAILABLE`:
-1. Check if Ollama is running in system tray or service manager.
-2. Start Ollama service or launch `ollama app` / `ollama serve`.
-3. Verify access at `http://localhost:11434`.
+The engine enforces a strict 12-domain taxonomy (`app/taxonomy/taxonomy.py`):
 
-### Model Missing (`AI_MODEL_NOT_FOUND`)
-If `/classify` returns `AI_MODEL_NOT_FOUND`:
-1. Check installed models with `ollama list`.
-2. Download model using `ollama pull gemma3:4b`.
+1. **Education**: `Access`, `Infrastructure`, `Learning Support`, `Digital Education`
+2. **Healthcare**: `Access`, `Public Health`, `Facilities`, `Diagnostics`
+3. **Agriculture**: `Irrigation`, `Crop Support`, `Storage`, `Market Linkage`
+4. **Water Resources**: `Supply`, `Quality`, `Leakage`, `Conservation`, `Monitoring`
+5. **Sanitation**: `Waste`, `Drainage`, `Toilets`, `Cleanliness`
+6. **Environment**: `Pollution`, `Biodiversity`, `Waste Reduction`, `Climate Resilience`
+7. **Energy**: `Access`, `Efficiency`, `Renewable Energy`, `Public Lighting`
+8. **Urban Infrastructure**: `Roads`, `Drainage`, `Streetlights`, `Public Spaces`
+9. **Accessibility**: `Mobility`, `Assistive Infrastructure`, `Inclusive Services`
+10. **Public Administration**: `Service Delivery`, `Information Access`, `Process Gaps`
+11. **Rural Livelihoods**: `Skills`, `Employment`, `Local Enterprises`, `Market Access`
+12. **Other**: `Unclassified`
 
 ---
 
-## 11. Testing
-Run the complete automated test suite using `pytest`:
-```bash
-pytest -v
-```
-All unit tests mock external LLM/Ollama network calls to run fast and deterministically offline.
+## 11. Secondary Domain Classification Rules
+
+The decision rules for `secondaryDomains` strictly distinguish between distinct issues vs. indirect stakeholder exposure:
+
+1. **Core Problem**: Primary domain is chosen based on the root physical cause/facility failure.
+2. **Distinct Second Problem Requirement**: A domain is included in `secondaryDomains` **only** when there is explicit, evidence-supported text describing a distinct second problem (e.g., students missing classes -> `"Education"`).
+3. **Prohibited Secondary Domain Additions**: A domain MUST NOT be added merely because:
+   - An affected stakeholder is present (e.g. students or teachers at a school location),
+   - The location is associated with that domain (e.g. problem occurs near a school or hospital),
+   - The issue has indirect downstream consequences,
+   - Or the model infers plausible relevance without explicit evidence.
+4. **Decision Rule Comparison Examples**:
+   - *"Unsafe school toilets causing students to miss classes"* -> `primaryDomain`: Sanitation, `subcategory`: Toilets, `secondaryDomains`: `["Education"]`. (Explicit evidence of education access failure).
+   - *"Garbage burning near school"* -> `primaryDomain`: Environment, `subcategory`: Pollution, `secondaryDomains`: `[]`. (Location is near school, but no distinct education access failure is stated).
+   - *"Broken school toilets"* -> `primaryDomain`: Sanitation, `subcategory`: Toilets, `secondaryDomains`: `[]`. (No mention of missed classes).
 
 ---
 
 ## 12. Severity Assessment Framework
 
-CivicFix evaluates severity using an explicit, evidence-based qualitative framework. Before assigning the final `severity` (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`), the model systematically evaluates 9 qualitative severity factors:
+Severity (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`) is computed after systematically evaluating 9 evidence-based qualitative factors:
 
-1. **Health & Safety Impact**: Physical or health-related harm (`NONE`, `LOW`, `MODERATE`, `HIGH`, `CRITICAL`, `UNKNOWN`).
-2. **Exposure Scope**: Qualitative population scope (`INDIVIDUAL`, `LOCAL`, `COMMUNITY`, `LARGE_AREA`, `WIDESPREAD`, `UNKNOWN`).
-3. **Vulnerable Population Exposure**: Presence of vulnerable groups like children, elderly, patients (`NONE_IDENTIFIED`, `POSSIBLE`, `CLEAR`, `UNKNOWN`).
-4. **Geographic Extent**: Spatial footprint of affected area (`SINGLE_LOCATION`, `LOCAL_AREA`, `MULTIPLE_LOCATIONS`, `WIDE_AREA`, `UNKNOWN`).
-5. **Duration / Persistence**: How long problem has existed (`SHORT_TERM`, `ONGOING`, `LONG_TERM`, `PERSISTENT`, `UNKNOWN`).
-6. **Infrastructure / Essential Service Impact**: Disruption to critical utilities or services (`NONE`, `LOW`, `MODERATE`, `HIGH`, `CRITICAL`, `UNKNOWN`).
-7. **Environmental Impact**: Ecological or pollution consequences (`NONE`, `LOW`, `MODERATE`, `HIGH`, `CRITICAL`, `UNKNOWN`).
-8. **Social / Economic Impact**: Livelihood, business, or educational harm (`NONE`, `LOW`, `MODERATE`, `HIGH`, `CRITICAL`, `UNKNOWN`).
-9. **Reversibility**: Ease of reversing or recovering from impact (`EASILY_REVERSIBLE`, `RECOVERABLE`, `DIFFICULT_TO_RECOVER`, `POTENTIALLY_IRREVERSIBLE`, `UNKNOWN`).
-
-### Critical Operating Principles:
-- **No Fact Fabrication**: CivicFix does not invent missing population counts, durations, costs, or other unsupported facts. Unsupported information is marked `UNKNOWN` or `NOT_PROVIDED`.
-- **Impact vs. Certainty**: Missing information represents uncertainty and may reduce confidence score (triggering `review_required`), but does NOT automatically force a `LOW` severity rating for serious problems.
-- **Severity ≠ Urgency**: `severity` (magnitude of harm) and `urgency` (speed of action required) are evaluated independently.
-- **Implementation Design Note**: *These 9 severity factors are an explicit CivicFix implementation design for consistent explainability and are not presented as exact weights or requirements mandated by the SRS.*
+1. `healthSafetyImpact`: `NONE`, `LOW`, `MODERATE`, `HIGH`, `CRITICAL`, `UNKNOWN`
+2. `exposureScope`: `INDIVIDUAL`, `LOCAL`, `COMMUNITY`, `LARGE_AREA`, `WIDESPREAD`, `UNKNOWN`
+3. `vulnerablePopulationExposure`: `NONE_IDENTIFIED`, `POSSIBLE`, `CLEAR`, `UNKNOWN`
+4. `geographicExtent`: `SINGLE_LOCATION`, `LOCAL_AREA`, `MULTIPLE_LOCATIONS`, `WIDE_AREA`, `UNKNOWN`
+5. `duration`: `SHORT_TERM`, `ONGOING`, `LONG_TERM`, `PERSISTENT`, `UNKNOWN`
+6. `infrastructureImpact`: `NONE`, `LOW`, `MODERATE`, `HIGH`, `CRITICAL`, `UNKNOWN`
+7. `environmentalImpact`: `NONE`, `LOW`, `MODERATE`, `HIGH`, `CRITICAL`, `UNKNOWN`
+8. `socialEconomicImpact`: `NONE`, `LOW`, `MODERATE`, `HIGH`, `CRITICAL`, `UNKNOWN`
+9. `reversibility`: `EASILY_REVERSIBLE`, `RECOVERABLE`, `DIFFICULT_TO_RECOVER`, `POTENTIALLY_IRREVERSIBLE`, `UNKNOWN`
 
 ---
 
-## 13. Future Extension Points
-Designed for seamless integration into larger platforms:
-1. Multilingual input translation
-2. Image & Video multi-modal analysis
-3. Vector embeddings & duplicate problem detection
-4. Custom fine-tuned ML model evaluation
-5. Human feedback & active learning loops
+## 13. Testing
 
+Run the automated test suite with `pytest`:
+
+```bash
+python -m pytest classification-engine/tests
+```
+
+**Verified Test Results**:
+- **Total Tests**: 70 Passed, 0 Failed
+- **Execution Time**: ~6 seconds
+
+---
+
+## 14. Integration Into Another Repository
+
+To integrate the Classification Engine into another platform or backend:
+
+1. Treat the engine as an independent HTTP microservice over REST.
+2. Send a `POST http://<host>:8000/classify` request during problem creation or submission pipelines.
+3. The consuming application backend processes the JSON response and stores the resulting classification fields in its own database.
+
+```text
+Consuming Platform Backend
+          │
+          ▼ POST http://localhost:8000/classify
+Classification Engine Service (:8000)
+          │
+          ▼ Returns ClassificationResponse JSON
+Consuming Platform Backend stores result in local DB
+```
+
+### Python Integration Example
+```python
+import httpx
+
+async def classify_submission(title: str, description: str, district: str, state: str):
+    payload = {
+        "problemId": "PROB-001",
+        "title": title,
+        "description": description,
+        "location": {"district": district, "state": state}
+    }
+    async with httpx.AsyncClient() as client:
+        response = await client.post("http://localhost:8000/classify", json=payload)
+        response.raise_for_status()
+        return response.json()
+```
+
+---
+
+## 15. Integration Checklist
+
+- [ ] Install and verify Ollama (`ollama --version`)
+- [ ] Pull Gemma 3 4B model (`ollama pull gemma3:4b`)
+- [ ] Copy `.env.example` to `.env` and verify port 8000 configuration
+- [ ] Launch service: `uvicorn app.main:app --host 0.0.0.0 --port 8000`
+- [ ] Verify `GET http://localhost:8000/health` returns `{"status": "healthy"}`
+- [ ] Configure consuming backend `VITE_CLASSIFICATION_URL` / `CLASSIFICATION_ENGINE_URL` to `http://localhost:8000`
+- [ ] Call `POST /classify` and handle `classified`, `review_required`, and `failed` status outcomes
+
+---
+
+## 16. What NOT to Copy
+
+When extracting or integrating this component into another repository, **DO NOT**:
+- Copy or import internal Python modules (`app.services`, `app.ai`) directly into your application code.
+- Tie your domain models directly to internal Pydantic schemas; depend only on the HTTP REST API contract.
+- Hardcode LLM provider logic or Ollama API calls inside your core backend application.

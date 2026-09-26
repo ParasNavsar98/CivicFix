@@ -38,9 +38,29 @@ Extract `peopleAffected` ONLY if explicitly reported by citizen:
 - If citizen did NOT explicitly provide a count: value=null, unit=null, source="NOT_PROVIDED".
 
 ### STRICT CLASSIFICATION RULES:
-1. **primaryDomain**: Must be EXACTLY ONE domain key from controlled taxonomy representing CORE sector affected.
-2. **subcategory**: Must be EXACTLY ONE valid subcategory belonging to your chosen primaryDomain.
-3. **secondaryDomains**: Include ONLY valid primary domain keys (e.g. ["Healthcare"]). Return [] if none. NEVER put subcategories in secondaryDomains.
+1. **primaryDomain**: Set to the domain representing the CORE ROOT PHYSICAL FACILITY or CAUSE of the problem (e.g., Sanitation for toilets, Environment for garbage burning, Water Resources for pipe leakage).
+2. **subcategory**: Set to a valid subcategory belonging strictly to your chosen primaryDomain (e.g., Toilets for Sanitation).
+3. **secondaryDomains**: A JSON array of OTHER valid primary domain keys (e.g., ["Education"]).
+   STRICT SECONDARY-DOMAIN DECISION RULES:
+   a. **Identify Primary Domain First:** Select `primaryDomain` based on the core problem.
+   b. **Distinct Evidence Check:** Check whether the report explicitly contains one or more DISTINCT, evidence-supported issues that belong to another domain in the controlled 12-domain taxonomy. Add that domain to `secondaryDomains` ONLY when there is explicit or strongly supported evidence for the second-domain issue.
+   c. **DO NOT Add a Secondary Domain Merely Because:**
+      - A stakeholder from that domain is affected (e.g., students or teachers present, patients present, farmers present),
+      - The location is associated with that domain (e.g., problem takes place near/at a school or hospital),
+      - The issue has indirect consequences for that domain,
+      - The domain is generally related,
+      - Or the model thinks the domain might be relevant or infers plausible downstream impact without explicit evidence.
+   d. **Distinguish Between "Affected Stakeholder" and "Distinct Secondary-Domain Problem":**
+      - Affected Stakeholder / Location Association Only -> `secondaryDomains` MUST be `[]`.
+      - Distinct Secondary-Domain Problem Supported by Explicit Evidence -> Add that primary domain key to `secondaryDomains`.
+   e. **Do Not Invent Facts:** If evidence for a secondary domain issue is insufficient or absent, leave `secondaryDomains` as `[]`.
+   f. **Multiple Secondary Domains:** Allowed ONLY when multiple distinct secondary issues are independently supported by explicit evidence.
+   g. **Valid Domain Keys Only:** `secondaryDomains` must always contain ONLY valid primary-domain taxonomy keys (e.g., "Education", "Healthcare", "Agriculture"). Never include subcategory names or the `primaryDomain` itself.
+   h. **Examples:**
+      - "Unsafe school toilets causing students to miss classes" -> primaryDomain="Sanitation", subcategory="Toilets", secondaryDomains=["Education"].
+      - "Poor school sanitation causes students to miss classes" -> primaryDomain="Sanitation", subcategory="Toilets", secondaryDomains=["Education"].
+      - "Broken school toilets" -> primaryDomain="Sanitation", subcategory="Toilets", secondaryDomains=[].
+      - "Garbage burning near school" -> primaryDomain="Environment", subcategory="Pollution", secondaryDomains=[].
 4. **severity**: EXACTLY ONE OF ["LOW", "MEDIUM", "HIGH", "CRITICAL"]. Overall magnitude of harm derived from severity factors. IMPORTANT: Missing evidence does NOT force LOW severity (a serious gas leak in school with unknown student count is still HIGH/CRITICAL severity, but with lower confidence).
 5. **severityAssessment**: JSON object containing exact enum string values for all 9 severity factors evaluated above.
 6. **severityEvidence**: List of string statements derived ONLY from citizen submission supporting your severity assessment.
@@ -58,38 +78,43 @@ Extract `peopleAffected` ONLY if explicitly reported by citizen:
 You MUST output ONLY a valid JSON object matching the requested schema.
 Do NOT include markdown fences, extra commentary, or forbidden fields.
 
-Output Structure:
+Output Structure Example:
 {{
-  "problemSummary": "string",
-  "primaryDomain": "string",
-  "secondaryDomains": ["string"],
-  "subcategory": "string",
-  "severity": "LOW" | "MEDIUM" | "HIGH" | "CRITICAL",
+  "problemSummary": "Concise summary",
+  "primaryDomain": "Sanitation",
+  "secondaryDomains": ["Education"],
+  "subcategory": "Toilets",
+  "severity": "CRITICAL",
   "severityAssessment": {{
-    "healthSafetyImpact": "NONE" | "LOW" | "MODERATE" | "HIGH" | "CRITICAL" | "UNKNOWN",
-    "exposureScope": "INDIVIDUAL" | "LOCAL" | "COMMUNITY" | "LARGE_AREA" | "WIDESPREAD" | "UNKNOWN",
-    "vulnerablePopulationExposure": "NONE_IDENTIFIED" | "POSSIBLE" | "CLEAR" | "UNKNOWN",
-    "geographicExtent": "SINGLE_LOCATION" | "LOCAL_AREA" | "MULTIPLE_LOCATIONS" | "WIDE_AREA" | "UNKNOWN",
-    "duration": "SHORT_TERM" | "ONGOING" | "LONG_TERM" | "PERSISTENT" | "UNKNOWN",
-    "infrastructureImpact": "NONE" | "LOW" | "MODERATE" | "HIGH" | "CRITICAL" | "UNKNOWN",
-    "environmentalImpact": "NONE" | "LOW" | "MODERATE" | "HIGH" | "CRITICAL" | "UNKNOWN",
-    "socialEconomicImpact": "NONE" | "LOW" | "MODERATE" | "HIGH" | "CRITICAL" | "UNKNOWN",
-    "reversibility": "EASILY_REVERSIBLE" | "RECOVERABLE" | "DIFFICULT_TO_RECOVER" | "POTENTIALLY_IRREVERSIBLE" | "UNKNOWN"
+    "healthSafetyImpact": "HIGH",
+    "exposureScope": "COMMUNITY",
+    "vulnerablePopulationExposure": "CLEAR",
+    "geographicExtent": "LOCAL_AREA",
+    "duration": "ONGOING",
+    "infrastructureImpact": "CRITICAL",
+    "environmentalImpact": "NONE",
+    "socialEconomicImpact": "HIGH",
+    "reversibility": "DIFFICULT_TO_RECOVER"
   }},
-  "severityEvidence": ["string"],
+  "severityEvidence": ["Damaged school toilets preventing class attendance."],
   "peopleAffected": {{
-    "value": integer | null,
-    "unit": "string" | null,
-    "source": "NOT_PROVIDED" | "CITIZEN_REPORTED"
+    "value": null,
+    "unit": null,
+    "source": "NOT_PROVIDED"
   }},
-  "urgency": "LOW" | "MEDIUM" | "HIGH" | "CRITICAL",
-  "researchRequired": boolean,
-  "governmentActionPossible": boolean,
-  "requiredExpertise": ["string"],
-  "requiredResources": ["string"],
-  "confidence": float,
-  "reasoning": "string"
+  "urgency": "HIGH",
+  "researchRequired": false,
+  "governmentActionPossible": true,
+  "requiredExpertise": ["Sanitation Engineering"],
+  "requiredResources": ["Construction Materials"],
+  "confidence": 0.95,
+  "reasoning": "Primary problem is damaged toilets (Sanitation/Toilets). Secondary distinct problem is students missing classes (Education)."
 }}
+
+### CRITICAL SECONDARY DOMAIN INSTRUCTION:
+Check `secondaryDomains` before returning JSON:
+- If the text explicitly states a second distinct problem belonging to another domain (e.g., "missing classes", "unable to attend school", "classes disrupted" -> "Education"; or "crop losses", "poor income" -> "Rural Livelihoods"), you MUST include that domain key in `secondaryDomains`.
+- If NO second distinct problem is stated (e.g. broken toilets at school with no mention of missing classes; or garbage burning near school with no distinct education access problem), `secondaryDomains` MUST be `[]`.
 
 ### CITIZEN PROBLEM SUBMISSION TO CLASSIFY:
 Problem ID: {input_data.problemId}

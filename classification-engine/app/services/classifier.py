@@ -1,7 +1,8 @@
 import json
 import logging
+import re
 import time
-from typing import Optional
+from typing import List, Optional
 
 from app.config import settings
 from app.ai.provider import LLMProvider, LLMProviderException
@@ -19,6 +20,76 @@ from app.services.confidence import evaluate_confidence
 from app.taxonomy.taxonomy import is_valid_domain, is_valid_subcategory
 
 logger = logging.getLogger(__name__)
+
+
+def extract_evidence_based_secondary_domains(
+    description: str,
+    title: str,
+    reasoning: str,
+    severity_evidence: List[str],
+    primary_domain: str,
+    llm_secondary_domains: List[str],
+) -> List[str]:
+    """
+    Evaluates explicit, evidence-supported secondary domain problems
+    based on controlled taxonomy rules.
+    """
+    text = f"{title} {description} {reasoning} {' '.join(severity_evidence)}".lower()
+
+    # Rule-based distinct problem evidence patterns (Requires distinct problem phrase, not just location/stakeholder keyword!)
+    EVIDENCE_PATTERNS = {
+        "Education": [
+            r"\b(miss|missing|absent from|unable to attend|cannot attend|disrupting|stopped attending|prevents? attending|preventing.*attending)\s+.*?\b(classes|school|education)\b",
+            r"\b(education access|learning disruption|school attendance)\s+(problem|failure|impact|issue|disruption)\b",
+            r"\b(students?|children)\s+.*?\b(unable to attend|missing|frequently missing|cannot attend|miss|missed)\s+(classes|school)\b",
+        ],
+        "Healthcare": [
+            r"\b(lack of|shortage of|no)\s+(medicines?|drugs?|medical supplies|doctors?|nurses?|health services)\b",
+            r"\b(hospital|clinic|health center)\s+(lacks|shortage|supply shortage|closed|unusable)\b",
+            r"\b(disease outbreak|epidemic|infection spreading)\b",
+        ],
+        "Sanitation": [
+            r"\b(unusable|broken|damaged|severely damaged)\s+(toilets?|latrines?|sanitation facilities)\b",
+            r"\b(sewage|drainage)\s+(overflowing|blocked|clogged|flooding)\b",
+        ],
+        "Environment": [
+            r"\b(burning|dumping)\s+(garbage|trash|waste)\b",
+            r"\b(toxic|harmful)\s+(smoke|fumes|pollution|emissions)\b",
+        ],
+        "Urban Infrastructure": [
+            r"\b(deep|dangerous)\s+(potholes?|craters?|road damage)\b",
+            r"\b(streetlights?|lamp poles?)\s+(out|dark|not working|failure)\b",
+        ],
+        "Water Resources": [
+            r"\b(drinking water|water pipeline|water main)\s+(leak|leakage|burst|rupture|contamination|shortage)\b",
+            r"\b(inadequate|lack of|no)\s+(irrigation|water supply for crops|agricultural water)\b",
+        ],
+        "Rural Livelihoods": [
+            r"\b(difficulty accessing|lack of|poor)\s+(markets?|market access)\b",
+            r"\b(crop losses?|loss of income|poor income|livelihood loss)\b",
+        ],
+    }
+
+    sec_domains = list(llm_secondary_domains or [])
+
+    for domain, patterns in EVIDENCE_PATTERNS.items():
+        if domain == primary_domain:
+            continue
+        if domain in sec_domains:
+            continue
+
+        for pat in patterns:
+            if re.search(pat, text, re.IGNORECASE):
+                sec_domains.append(domain)
+                break
+
+    # Filter invalid domains or duplicate primary domain
+    valid_sec = []
+    for d in sec_domains:
+        if is_valid_domain(d) and d != primary_domain and d not in valid_sec:
+            valid_sec.append(d)
+
+    return valid_sec
 
 
 class TaxonomyValidationError(Exception):
@@ -150,7 +221,7 @@ class ClassifierService:
                     ),
                 )
 
-            # 6. Business & Taxonomy Validation
+            # 6. Business & Taxonomy Validation (Enforce taxonomy rules on LLM raw output)
             try:
                 self.validate_taxonomy_rules(classification_result)
             except TaxonomyValidationError as err:
@@ -163,6 +234,16 @@ class ClassifierService:
                         message=err.message,
                     ),
                 )
+
+            # 7. Secondary Domain Safeguard / Evidence Extraction
+            classification_result.secondaryDomains = extract_evidence_based_secondary_domains(
+                description=processed_input.description,
+                title=processed_input.title,
+                reasoning=classification_result.reasoning,
+                severity_evidence=classification_result.severityEvidence,
+                primary_domain=classification_result.primaryDomain,
+                llm_secondary_domains=classification_result.secondaryDomains,
+            )
 
             # 7. Evidence Sufficiency & Ambiguity Safeguards
             evidence_sufficient = self.is_evidence_sufficient(processed_input)

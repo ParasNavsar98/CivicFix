@@ -271,3 +271,197 @@ async def test_llm_provider_timeout_failure():
     response = await service.classify_problem(inp)
     assert response.status == StatusEnum.FAILED
     assert response.error.errorCode == "AI_PROVIDER_TIMEOUT"
+
+
+@pytest.mark.asyncio
+async def test_regression_case_1_unsafe_school_toilets_miss_classes():
+    mock_json = json.dumps({
+        "problemSummary": "Unsafe school toilets causing students to miss classes",
+        "primaryDomain": "Sanitation",
+        "secondaryDomains": [],  # Simulated raw LLM missing secondary domain
+        "subcategory": "Toilets",
+        "severity": "CRITICAL",
+        "urgency": "HIGH",
+        "researchRequired": False,
+        "governmentActionPossible": True,
+        "requiredExpertise": ["Sanitation Engineering"],
+        "requiredResources": ["Construction Materials"],
+        "confidence": 0.90,
+        "reasoning": "Damaged toilets at school prevent students from attending class."
+    })
+    service = ClassifierService(llm_provider=MockLLMProvider(response_text=mock_json))
+
+    inp = ProblemClassificationInput(
+        problemId="CASE_1",
+        title="Unsafe school toilets causing students to miss classes",
+        description="The government school has severely damaged and unusable toilets. Students are frequently unable to attend classes because there are no functional sanitation facilities. The problem creates both a sanitation failure and a direct education access problem.",
+        location=ProblemLocation(district="Ranchi", state="Jharkhand"),
+    )
+
+    response = await service.classify_problem(inp)
+    assert response.status == StatusEnum.CLASSIFIED
+    assert response.classification.primaryDomain == "Sanitation"
+    assert response.classification.subcategory == "Toilets"
+    assert "Education" in response.classification.secondaryDomains
+
+
+@pytest.mark.asyncio
+async def test_regression_case_2_garbage_burning_near_school_no_education_secondary():
+    mock_json = json.dumps({
+        "problemSummary": "Garbage burning near school",
+        "primaryDomain": "Environment",
+        "secondaryDomains": [],
+        "subcategory": "Pollution",
+        "severity": "HIGH",
+        "urgency": "HIGH",
+        "researchRequired": False,
+        "governmentActionPossible": True,
+        "requiredExpertise": ["Waste Management"],
+        "requiredResources": ["Waste Collection"],
+        "confidence": 0.90,
+        "reasoning": "Garbage burning near school causes smoke exposure."
+    })
+    service = ClassifierService(llm_provider=MockLLMProvider(response_text=mock_json))
+
+    inp = ProblemClassificationInput(
+        problemId="CASE_2",
+        title="Garbage burning near school",
+        description="People are regularly burning garbage near the government school. Thick smoke enters the classrooms and students are exposed to the smoke during school hours.",
+        location=ProblemLocation(district="Ranchi", state="Jharkhand"),
+    )
+
+    response = await service.classify_problem(inp)
+    assert response.status == StatusEnum.CLASSIFIED
+    assert response.classification.primaryDomain == "Environment"
+    assert response.classification.subcategory == "Pollution"
+    assert "Education" not in response.classification.secondaryDomains
+
+
+@pytest.mark.asyncio
+async def test_regression_case_3_broken_school_toilets_no_secondary():
+    mock_json = json.dumps({
+        "problemSummary": "Broken school toilets",
+        "primaryDomain": "Sanitation",
+        "secondaryDomains": [],
+        "subcategory": "Toilets",
+        "severity": "HIGH",
+        "urgency": "HIGH",
+        "researchRequired": False,
+        "governmentActionPossible": True,
+        "requiredExpertise": ["Plumbing"],
+        "requiredResources": ["Sanitation Equipment"],
+        "confidence": 0.92,
+        "reasoning": "Facilities require repair."
+    })
+    service = ClassifierService(llm_provider=MockLLMProvider(response_text=mock_json))
+
+    inp = ProblemClassificationInput(
+        problemId="CASE_3",
+        title="Broken school toilets",
+        description="The government school toilets are damaged and unusable. The facilities require repair.",
+        location=ProblemLocation(district="Ranchi", state="Jharkhand"),
+    )
+
+    response = await service.classify_problem(inp)
+    assert response.status == StatusEnum.CLASSIFIED
+    assert response.classification.primaryDomain == "Sanitation"
+    assert response.classification.subcategory == "Toilets"
+    assert response.classification.secondaryDomains == []
+
+
+@pytest.mark.asyncio
+async def test_regression_case_4_poor_school_sanitation_miss_classes():
+    mock_json = json.dumps({
+        "problemSummary": "Poor school sanitation causes students to miss classes",
+        "primaryDomain": "Sanitation",
+        "secondaryDomains": ["Education"],
+        "subcategory": "Toilets",
+        "severity": "CRITICAL",
+        "urgency": "HIGH",
+        "researchRequired": False,
+        "governmentActionPossible": True,
+        "requiredExpertise": ["Sanitation Engineering"],
+        "requiredResources": ["Sanitation Supplies"],
+        "confidence": 0.91,
+        "reasoning": "Unusable toilets repeatedly prevent student attendance."
+    })
+    service = ClassifierService(llm_provider=MockLLMProvider(response_text=mock_json))
+
+    inp = ProblemClassificationInput(
+        problemId="CASE_4",
+        title="Poor school sanitation causes students to miss classes",
+        description="The school toilets are unusable because of severe sanitation problems. Students are repeatedly unable to attend classes because they cannot access functional sanitation facilities.",
+        location=ProblemLocation(district="Ranchi", state="Jharkhand"),
+    )
+
+    response = await service.classify_problem(inp)
+    assert response.status == StatusEnum.CLASSIFIED
+    assert response.classification.primaryDomain == "Sanitation"
+    assert response.classification.subcategory == "Toilets"
+    assert "Education" in response.classification.secondaryDomains
+
+
+@pytest.mark.asyncio
+async def test_regression_case_5_low_crop_prices_lack_irrigation():
+    mock_json = json.dumps({
+        "problemSummary": "Low crop prices and lack of irrigation",
+        "primaryDomain": "Agriculture",
+        "secondaryDomains": ["Rural Livelihoods"],
+        "subcategory": "Irrigation",
+        "severity": "HIGH",
+        "urgency": "MEDIUM",
+        "researchRequired": False,
+        "governmentActionPossible": True,
+        "requiredExpertise": ["Agricultural Economics"],
+        "requiredResources": ["Irrigation Pumps"],
+        "confidence": 0.88,
+        "reasoning": "Inadequate irrigation and market access difficulties impact farmers."
+    })
+    service = ClassifierService(llm_provider=MockLLMProvider(response_text=mock_json))
+
+    inp = ProblemClassificationInput(
+        problemId="CASE_5",
+        title="Low crop prices and lack of irrigation",
+        description="Farmers are simultaneously facing inadequate irrigation and difficulty accessing markets, resulting in crop losses and poor income.",
+        location=ProblemLocation(district="Nashik", state="Maharashtra"),
+    )
+
+    response = await service.classify_problem(inp)
+    assert response.status == StatusEnum.CLASSIFIED
+    assert response.classification.primaryDomain == "Agriculture"
+    for sec in response.classification.secondaryDomains:
+        assert sec in ["Rural Livelihoods", "Water Resources"]
+
+
+@pytest.mark.asyncio
+async def test_vague_indirect_stakeholder_impact_does_not_create_secondary():
+    """Verify that indirect location/stakeholder presence does not force secondary domains."""
+    mock_json = json.dumps({
+        "problemSummary": "Potholes near hospital road",
+        "primaryDomain": "Urban Infrastructure",
+        "secondaryDomains": [],
+        "subcategory": "Roads",
+        "severity": "MEDIUM",
+        "urgency": "HIGH",
+        "researchRequired": False,
+        "governmentActionPossible": True,
+        "requiredExpertise": ["Civil Engineering"],
+        "requiredResources": ["Asphalt"],
+        "confidence": 0.90,
+        "reasoning": "Potholes on public road."
+    })
+    service = ClassifierService(llm_provider=MockLLMProvider(response_text=mock_json))
+
+    inp = ProblemClassificationInput(
+        problemId="STAKEHOLDER_TEST",
+        title="Hospital road potholes",
+        description="The main road outside the municipal hospital has several deep potholes. Vehicles and hospital visitors commute on this road.",
+        location=ProblemLocation(district="Patna", state="Bihar"),
+    )
+
+    response = await service.classify_problem(inp)
+    assert response.status == StatusEnum.CLASSIFIED
+    assert response.classification.primaryDomain == "Urban Infrastructure"
+    assert response.classification.subcategory == "Roads"
+    assert "Healthcare" not in response.classification.secondaryDomains
+
