@@ -1,0 +1,477 @@
+[
+  {
+    "universityId": "UNI-JH-001",
+    "institution": {
+      "name": "Ranchi Institute of Environmental Sciences",
+      "type": "University",
+      "location": {
+        "district": "Ranchi",
+        "state": "Jharkhand",
+        "latitude": 23.3441,
+        "longitude": 85.3096
+      },
+      "contact": {
+        "email": "spoc@ries.edu",
+        "phone": "+911000000001"
+      }
+    },
+    "departments": [
+      "Environmental Science",
+      "Civil Engineering",
+      "Computer Science and Engineering"
+    ],
+    "expertise": [
+      "Environmental Management",
+      "Waste Management",
+      "Pollution Control",
+      "Environmental Engineering"
+    ],
+    "researchAreas": [
+      "Waste Management",
+      "Environmental Pollution",
+      "Sustainable Development"
+    ],
+    "faculty": [
+      {
+        "facultyId": "FAC-001",
+        "name": "Dr. A. Kumar",
+        "department": "Environmental Science",
+        "expertise": [
+          "Environmental Management",
+          "Pollution Control"
+        ],
+        "researchAreas": [
+          "Environmental Pollution"
+        ],
+        "availableForProjects": true
+      },
+      {
+        "facultyId": "FAC-002",
+        "name": "Dr. S. Roy",
+        "department": "Civil Engineering",
+        "expertise": [
+          "Waste Management"
+        ],
+        "researchAreas": [
+          "Solid Waste Management"
+        ],
+        "availableForProjects": true
+      }
+    ],
+    "infrastructure": [
+      "Environmental Laboratory",
+      "Pollution Monitoring Equipment",
+      "Water Quality Laboratory"
+    ],
+    "technologyCapabilities": [
+      "Environmental Monitoring",
+      "IoT Monitoring",
+      "Data Analysis"
+    ],
+    "pastProjects": [
+      {
+        "title": "Community Waste Management Study",
+        "domains": [
+          "Environment",
+          "Sanitation"
+        ],
+        "expertise": [
+          "Waste Management",
+          "Pollution Control"
+        ],
+        "description": "Study focused on community-level waste management."
+      }
+    ],
+    "industryRelationships": [
+      "Environmental Technology Companies",
+      "IoT Companies"
+    ],
+    "capacity": {
+      "activeProjects": 6,
+      "maximumProjects": 10,
+      "availableTeams": 2,
+      "availability": "AVAILABLE"
+    },
+    "status": "ACTIVE",
+    "_demo": true
+  },
+  {
+    "universityId": "UNI-JH-002",
+    "institution": {
+      "name": "Jharkhand Institute of Public Health",
+      "type": "University",
+      "location": {
+        "district": "Ranchi",
+        "state": "Jharkhand",
+        "latitude": 23.35,
+        "longitude": 85.32
+      },
+      "contact": {
+        "email": "spoc@jiph.edu",
+        "phone": "+911000000002"
+      }
+    },
+    "departments": [
+      "Public Health",
+      "Community Medicine"
+    ],
+    "expertise": [
+      "Public Health",
+      "Community Health",
+      "Epidemiology"
+    ],
+    "researchAreas": [
+      "Health Impact of Pollution",
+      "Community Health"
+    ],
+    "faculty": [
+      {
+        "facultyId": "FAC-003",
+        "name": "Dr. P. Singh",
+        "department": "Public Health",
+        "expertise": [
+          "Public Health"
+        ],
+        "researchAreas": [
+          "Health Impact of Pollution"
+        ],
+        "availableForProjects": true
+      }
+    ],
+    "infrastructure": [
+      "Public Health Lab"
+    ],
+    "technologyCapabilities": [
+      "Health Data Analysis"
+    ],
+    "pastProjects": [
+      {
+        "title": "Air Quality and Respiratory Health Survey",
+        "domains": [
+          "Environment",
+          "Healthcare"
+        ],
+        "expertise": [
+          "Public Health"
+        ],
+        "description": "Survey on air quality health effects."
+      }
+    ],
+    "industryRelationships": [
+      "Pharma Companies"
+    ],
+    "capacity": {
+      "activeProjects": 9,
+      "maximumProjects": 10,
+      "availableTeams": 1,
+      "availability": "LIMITED"
+    },
+    "status": "ACTIVE",
+    "_demo": true
+  },
+  {
+    "universityId": "UNI-WB-001",
+    "institution": {
+      "name": "Kolkata Institute of Computer Vision & AI",
+      "type": "University",
+      "location": {
+        "district": "Kolkata",
+        "state": "West Bengal",
+        "latitude": 22.5726,
+        "longitude": 88.3639
+      },
+      "contact": {
+        "email": "spoc@kicva.edu",
+        "phone": "+911000000003"
+      }
+    },
+    "departments": [
+      "Computer Science and Engineering",
+      "Electronics"
+    ],
+    "expertise": [
+      "Computer Vision",
+      "Artificial Intelligence",
+      "Machine Learning",
+      "Agriculture"
+    ],
+    "researchAreas": [
+      "Precision Agriculture",
+      "AI for Agriculture"
+    ],
+    "faculty": [
+      {
+        "facultyId": "FAC-004",
+        "name": "Dr. R. Sen",
+        "department": "Computer Science and Engineering",
+        "expertise": [
+          "Computer Vision",
+          "Artificial Intelligence"
+        ],
+        "researchAreas": [
+          "AI for Agriculture"
+        ],
+        "availableForProjects": true
+      }
+    ],
+    "infrastructure": [
+      "GPU Compute Cluster",
+      "AI Lab"
+    ],
+    "technologyCapabilities": [
+      "Computer Vision",
+      "IoT Monitoring",
+      "Data Analysis"
+    ],
+    "pastProjects": [
+      {
+        "title": "Pest Detection using Computer Vision",
+        "domains": [
+          "Agriculture"
+        ],
+        "expertise": [
+          "Computer Vision",
+          "Artificial Intelligence"
+        ],
+        "description": "CV-based pest detection prototype."
+      }
+    ],
+    "industryRelationships": [
+      "AgTech Startups",
+      "IoT Companies"
+    ],
+    "capacity": {
+      "activeProjects": 3,
+      "maximumProjects": 8,
+      "availableTeams": 3,
+      "availability": "AVAILABLE"
+    },
+    "status": "ACTIVE",
+    "_demo": true
+  },
+  {
+    "universityId": "UNI-JH-003",
+    "institution": {
+      "name": "Jharkhand College of Civil & Infrastructure Engineering",
+      "type": "University",
+      "location": {
+        "district": "Dhanbad",
+        "state": "Jharkhand",
+        "latitude": 23.7957,
+        "longitude": 86.4304
+      },
+      "contact": {
+        "email": "spoc@jcie.edu",
+        "phone": "+911000000004"
+      }
+    },
+    "departments": [
+      "Civil Engineering",
+      "Structural Engineering"
+    ],
+    "expertise": [
+      "Civil Engineering",
+      "Structural Engineering",
+      "Infrastructure Planning"
+    ],
+    "researchAreas": [
+      "Urban Infrastructure",
+      "Structural Health Monitoring"
+    ],
+    "faculty": [
+      {
+        "facultyId": "FAC-005",
+        "name": "Dr. M. Verma",
+        "department": "Civil Engineering",
+        "expertise": [
+          "Civil Engineering",
+          "Infrastructure Planning"
+        ],
+        "researchAreas": [
+          "Urban Infrastructure"
+        ],
+        "availableForProjects": false
+      }
+    ],
+    "infrastructure": [
+      "Structural Testing Lab"
+    ],
+    "technologyCapabilities": [
+      "Structural Monitoring"
+    ],
+    "pastProjects": [
+      {
+        "title": "Bridge Health Monitoring System",
+        "domains": [
+          "Infrastructure"
+        ],
+        "expertise": [
+          "Civil Engineering"
+        ],
+        "description": "IoT-based bridge monitoring."
+      }
+    ],
+    "industryRelationships": [
+      "Construction Companies"
+    ],
+    "capacity": {
+      "activeProjects": 10,
+      "maximumProjects": 10,
+      "availableTeams": 0,
+      "availability": "UNAVAILABLE"
+    },
+    "status": "ACTIVE",
+    "_demo": true
+  },
+  {
+    "universityId": "UNI-JH-004",
+    "institution": {
+      "name": "Jamshedpur University of Agricultural Sciences",
+      "type": "University",
+      "location": {
+        "district": "Jamshedpur",
+        "state": "Jharkhand",
+        "latitude": 22.8046,
+        "longitude": 86.2029
+      },
+      "contact": {
+        "email": "spoc@juas.edu",
+        "phone": "+911000000005"
+      }
+    },
+    "departments": [
+      "Agricultural Science",
+      "Environmental Science"
+    ],
+    "expertise": [
+      "Agriculture",
+      "Environmental Management",
+      "Soil Science"
+    ],
+    "researchAreas": [
+      "Sustainable Agriculture",
+      "Waste Management"
+    ],
+    "faculty": [
+      {
+        "facultyId": "FAC-006",
+        "name": "Dr. K. Das",
+        "department": "Agricultural Science",
+        "expertise": [
+          "Agriculture",
+          "Soil Science"
+        ],
+        "researchAreas": [
+          "Sustainable Agriculture"
+        ],
+        "availableForProjects": true
+      },
+      {
+        "facultyId": "FAC-007",
+        "name": "Dr. N. Oraon",
+        "department": "Environmental Science",
+        "expertise": [
+          "Environmental Management"
+        ],
+        "researchAreas": [
+          "Waste Management"
+        ],
+        "availableForProjects": true
+      }
+    ],
+    "infrastructure": [
+      "Soil Testing Lab",
+      "Environmental Laboratory"
+    ],
+    "technologyCapabilities": [
+      "IoT Monitoring",
+      "Data Analysis"
+    ],
+    "pastProjects": [
+      {
+        "title": "Sustainable Waste-to-Compost Pilot",
+        "domains": [
+          "Agriculture",
+          "Environment"
+        ],
+        "expertise": [
+          "Environmental Management",
+          "Waste Management"
+        ],
+        "description": "Composting pilot for agricultural waste."
+      }
+    ],
+    "industryRelationships": [
+      "Environmental Technology Companies",
+      "AgTech Startups"
+    ],
+    "capacity": {
+      "activeProjects": 4,
+      "maximumProjects": 6,
+      "availableTeams": 2,
+      "availability": "AVAILABLE"
+    },
+    "status": "ACTIVE",
+    "_demo": true
+  },
+  {
+    "universityId": "UNI-DL-001",
+    "institution": {
+      "name": "Delhi Institute of Public Policy & Technology",
+      "type": "University",
+      "location": {
+        "district": "New Delhi",
+        "state": "Delhi",
+        "latitude": 28.6139,
+        "longitude": 77.209
+      },
+      "contact": {
+        "email": "spoc@dipt.edu",
+        "phone": "+911000000006"
+      }
+    },
+    "departments": [
+      "Public Policy",
+      "Computer Science and Engineering"
+    ],
+    "expertise": [
+      "Data Analysis",
+      "Public Health",
+      "Public Policy"
+    ],
+    "researchAreas": [
+      "Urban Health Policy"
+    ],
+    "faculty": [
+      {
+        "facultyId": "FAC-008",
+        "name": "Dr. T. Iyer",
+        "department": "Public Policy",
+        "expertise": [
+          "Public Health",
+          "Public Policy"
+        ],
+        "researchAreas": [
+          "Urban Health Policy"
+        ],
+        "availableForProjects": true
+      }
+    ],
+    "infrastructure": [
+      "Data Analytics Lab"
+    ],
+    "technologyCapabilities": [
+      "Data Analysis"
+    ],
+    "pastProjects": [],
+    "industryRelationships": [],
+    "capacity": {
+      "activeProjects": 0,
+      "maximumProjects": 0,
+      "availableTeams": 0,
+      "availability": "AVAILABLE"
+    },
+    "status": "ACTIVE",
+    "_demo": true
+  }
+]

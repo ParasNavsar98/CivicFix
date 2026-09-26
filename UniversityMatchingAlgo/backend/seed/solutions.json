@@ -1,0 +1,201 @@
+[
+  {
+    "solutionId": "SOL-001",
+    "problemId": "JH-001",
+    "projectId": "PRJ-001",
+    "universityId": "UNI-JH-001",
+    "title": "Smart Waste Burning Detection & Alert System",
+    "domain": "Environment",
+    "subcategory": "Pollution",
+    "location": {
+      "state": "Jharkhand",
+      "district": "Ranchi"
+    },
+    "developmentStage": "PROTOTYPE",
+    "supportNeeded": [
+      "Hardware",
+      "Technical Mentorship",
+      "Testing"
+    ],
+    "partnerType": [
+      "Startup",
+      "Industry"
+    ],
+    "visibility": "PUBLIC",
+    "status": "PUBLISHED",
+    "_demo": true
+  },
+  {
+    "solutionId": "SOL-002",
+    "problemId": "JH-002",
+    "projectId": "PRJ-002",
+    "universityId": "UNI-JH-002",
+    "title": "Community Health Exposure Tracker",
+    "domain": "Healthcare",
+    "subcategory": "Public Health",
+    "location": {
+      "state": "Jharkhand",
+      "district": "Ranchi"
+    },
+    "developmentStage": "PILOT",
+    "supportNeeded": [
+      "Funding",
+      "Software"
+    ],
+    "partnerType": [
+      "Industry"
+    ],
+    "visibility": "PUBLIC",
+    "status": "PUBLISHED",
+    "_demo": true
+  },
+  {
+    "solutionId": "SOL-003",
+    "problemId": "WB-001",
+    "projectId": "PRJ-003",
+    "universityId": "UNI-WB-001",
+    "title": "AI Pest Migration Detection System",
+    "domain": "Agriculture",
+    "subcategory": "Pest Management",
+    "location": {
+      "state": "West Bengal",
+      "district": "Kolkata"
+    },
+    "developmentStage": "PROTOTYPE",
+    "supportNeeded": [
+      "Hardware",
+      "Cloud",
+      "Testing"
+    ],
+    "partnerType": [
+      "Startup",
+      "Industry"
+    ],
+    "visibility": "PUBLIC",
+    "status": "PUBLISHED",
+    "_demo": true
+  },
+  {
+    "solutionId": "SOL-004",
+    "problemId": "JH-003",
+    "projectId": "PRJ-004",
+    "universityId": "UNI-JH-003",
+    "title": "IoT Bridge Structural Health Monitor",
+    "domain": "Infrastructure",
+    "subcategory": "Structural Safety",
+    "location": {
+      "state": "Jharkhand",
+      "district": "Dhanbad"
+    },
+    "developmentStage": "DEPLOYED",
+    "supportNeeded": [
+      "Manufacturing",
+      "Funding"
+    ],
+    "partnerType": [
+      "Industry"
+    ],
+    "visibility": "PUBLIC",
+    "status": "PUBLISHED",
+    "_demo": true
+  },
+  {
+    "solutionId": "SOL-005",
+    "problemId": "JH-004",
+    "projectId": "PRJ-005",
+    "universityId": "UNI-JH-004",
+    "title": "Agri-Waste to Compost Micro-Plant",
+    "domain": "Agriculture",
+    "subcategory": "Waste Management",
+    "location": {
+      "state": "Jharkhand",
+      "district": "Jamshedpur"
+    },
+    "developmentStage": "PILOT",
+    "supportNeeded": [
+      "Funding",
+      "Manufacturing",
+      "Domain Expertise"
+    ],
+    "partnerType": [
+      "Startup"
+    ],
+    "visibility": "PUBLIC",
+    "status": "PUBLISHED",
+    "_demo": true
+  },
+  {
+    "solutionId": "SOL-006",
+    "problemId": "DL-001",
+    "projectId": "PRJ-006",
+    "universityId": "UNI-DL-001",
+    "title": "Urban Air Quality Policy Dashboard",
+    "domain": "Healthcare",
+    "subcategory": "Public Health",
+    "location": {
+      "state": "Delhi",
+      "district": "New Delhi"
+    },
+    "developmentStage": "IDEA",
+    "supportNeeded": [
+      "Software",
+      "Domain Expertise"
+    ],
+    "partnerType": [
+      "Industry",
+      "Startup"
+    ],
+    "visibility": "PUBLIC",
+    "status": "PUBLISHED",
+    "_demo": true
+  },
+  {
+    "solutionId": "SOL-007",
+    "problemId": "JH-001",
+    "projectId": "PRJ-007",
+    "universityId": "UNI-JH-001",
+    "title": "Pollution Monitoring Sensor Network",
+    "domain": "Environment",
+    "subcategory": "Pollution",
+    "location": {
+      "state": "Jharkhand",
+      "district": "Ranchi"
+    },
+    "developmentStage": "PROTOTYPE",
+    "supportNeeded": [
+      "Hardware",
+      "Cloud"
+    ],
+    "partnerType": [
+      "Industry"
+    ],
+    "visibility": "PUBLIC",
+    "status": "PUBLISHED",
+    "_demo": true
+  },
+  {
+    "solutionId": "SOL-008",
+    "problemId": "WB-001",
+    "projectId": "PRJ-008",
+    "universityId": "UNI-WB-001",
+    "title": "Crop Yield Prediction Platform",
+    "domain": "Agriculture",
+    "subcategory": "Crop Management",
+    "location": {
+      "state": "West Bengal",
+      "district": "Kolkata"
+    },
+    "developmentStage": "PILOT",
+    "supportNeeded": [
+      "Cloud",
+      "Software",
+      "Testing"
+    ],
+    "partnerType": [
+      "Startup"
+    ],
+    "visibility": "PUBLIC",
+    "status": "PUBLISHED",
+    "_demo": true
+  }
+]

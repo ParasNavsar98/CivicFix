@@ -1,0 +1,83 @@
+[
+  {
+    "problemId": "JH-2026-001245",
+    "location": {
+      "district": "Ranchi",
+      "state": "Jharkhand",
+      "latitude": 23.3441,
+      "longitude": 85.3096
+    },
+    "classification": {
+      "problemSummary": "Garbage is being burned near a school, creating smoke exposure for students and nearby residents.",
+      "primaryDomain": "Environment",
+      "secondaryDomains": [
+        "Healthcare"
+      ],
+      "subcategory": "Pollution",
+      "severity": "HIGH",
+      "urgency": "HIGH",
+      "researchRequired": false,
+      "governmentActionPossible": true,
+      "requiredExpertise": [
+        "Environmental Management",
+        "Public Health"
+      ],
+      "requiredResources": [
+        "Waste collection",
+        "Waste disposal infrastructure"
+      ],
+      "confidence": 0.91
+    }
+  },
+  {
+    "problemId": "WB-2026-000871",
+    "location": {
+      "district": "Kolkata",
+      "state": "West Bengal",
+      "latitude": 22.5726,
+      "longitude": 88.3639
+    },
+    "classification": {
+      "problemSummary": "Farmers report unexplained pest migration destroying crops across several fields.",
+      "primaryDomain": "Agriculture",
+      "secondaryDomains": [],
+      "subcategory": "Pest Management",
+      "severity": "MODERATE",
+      "urgency": "MODERATE",
+      "researchRequired": true,
+      "governmentActionPossible": true,
+      "requiredExpertise": [
+        "Agriculture",
+        "Computer Vision"
+      ],
+      "requiredResources": [
+        "IoT monitoring"
+      ],
+      "confidence": 0.85
+    }
+  },
+  {
+    "problemId": "JH-2026-002210",
+    "location": {
+      "district": "Dhanbad",
+      "state": "Jharkhand",
+      "latitude": 23.7957,
+      "longitude": 86.4304
+    },
+    "classification": {
+      "problemSummary": "Residents report structural cracks appearing on a local bridge after heavy rainfall.",
+      "primaryDomain": "Infrastructure",
+      "secondaryDomains": [],
+      "subcategory": "Structural Safety",
+      "severity": "HIGH",
+      "urgency": "HIGH",
+      "researchRequired": false,
+      "governmentActionPossible": true,
+      "requiredExpertise": [
+        "Civil Engineering"
+      ],
+      "requiredResources": [],
+      "confidence": 0.88
+    }
+  }
+]

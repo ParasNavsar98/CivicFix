@@ -1,0 +1,49 @@
+[
+  {
+    "partnerId": "IND-001",
+    "name": "GreenTech Solutions Pvt Ltd",
+    "type": "Startup",
+    "focusAreas": [
+      "Environment",
+      "IoT"
+    ],
+    "_demo": true
+  },
+  {
+    "partnerId": "IND-002",
+    "name": "AgroNext Industries",
+    "type": "Industry",
+    "focusAreas": [
+      "Agriculture"
+    ],
+    "_demo": true
+  },
+  {
+    "partnerId": "IND-003",
+    "name": "HealthBridge Pharma",
+    "type": "Industry",
+    "focusAreas": [
+      "Healthcare"
+    ],
+    "_demo": true
+  },
+  {
+    "partnerId": "IND-004",
+    "name": "InfraCore Builders",
+    "type": "Industry",
+    "focusAreas": [
+      "Infrastructure"
+    ],
+    "_demo": true
+  },
+  {
+    "partnerId": "IND-005",
+    "name": "CivicSense Labs",
+    "type": "Startup",
+    "focusAreas": [
+      "Environment",
+      "Healthcare"
+    ],
+    "_demo": true
+  }
+]

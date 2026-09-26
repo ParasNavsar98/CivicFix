@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>University Matching Module — Test Console</title>
+<style>
+  :root { color-scheme: light; }
+  body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; max-width: 980px; margin: 0 auto; padding: 24px; background: #f6f7f9; color: #1a1a1a; }
+  h1 { font-size: 20px; }
+  h2 { font-size: 16px; margin-top: 0; }
+  section { background: #fff; border: 1px solid #e2e2e2; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+  label { display: block; font-size: 13px; font-weight: 600; margin: 10px 0 4px; }
+  input, select, textarea { width: 100%; padding: 6px 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 13px; }
+  button { background: #1f6feb; color: #fff; border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; margin-top: 10px; margin-right: 6px; }
+  button.secondary { background: #6b7280; }
+  button.danger { background: #dc2626; }
+  pre { background: #0d1117; color: #c9d1d9; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 12px; max-height: 320px; }
+  .row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .col { flex: 1; min-width: 220px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #eee; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .SENT { background: #fef3c7; color: #92400e; }
+  .ACCEPTED { background: #d1fae5; color: #065f46; }
+  .REJECTED, .CANCELLED { background: #fee2e2; color: #991b1b; }
+  .TIMED_OUT { background: #e5e7eb; color: #374151; }
+  .PENDING { background: #e0e7ff; color: #3730a3; }
+  small.hint { color: #6b7280; display: block; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<h1>🎓 University Matching + Industry Marketplace — Test Console</h1>
+<p style="color:#6b7280; font-size:13px;">
+  This is an internal dev/demo tool, not the real product frontend. It talks directly to the FastAPI backend.
+</p>
+
+<label>Backend URL</label>
+<input id="apiBase" value="http://localhost:8000" />
+
+<!-- STEP 1: MATCHING -->
+<section>
+  <h2>1. Run Matching</h2>
+  <div class="row">
+    <div class="col">
+      <label>Sample Problem</label>
+      <select id="sampleProblem" onchange="loadSampleProblem()">
+        <option value="">-- pick a sample problem --</option>
+      </select>
+    </div>
+    <div class="col">
+      <label>Problem ID</label>
+      <input id="problemId" placeholder="e.g. JH-2026-001245" />
+    </div>
+  </div>
+  <label>Classification JSON (from categorization system)</label>
+  <textarea id="classificationJson" rows="8"></textarea>
+  <div class="row">
+    <div class="col">
+      <label>District</label>
+      <input id="locDistrict" />
+    </div>
+    <div class="col">
+      <label>State</label>
+      <input id="locState" />
+    </div>
+  </div>
+  <button onclick="runMatching()">Run Matching</button>
+  <button class="secondary" onclick="loadAssignments()">Refresh Assignment Chain</button>
+  <pre id="matchingOutput">Results will appear here...</pre>
+</section>
+
+<!-- STEP 2: ASSIGNMENT CHAIN -->
+<section>
+  <h2>2. Assignment Chain (SPOC view)</h2>
+  <table id="assignmentTable">
+    <thead><tr><th>Rank</th><th>University</th><th>Score</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <small class="hint">Accept/Reject act on whichever assignment currently has status SENT.</small>
+</section>
+
+<!-- STEP 3: MARKETPLACE -->
+<section>
+  <h2>3. Industry Marketplace</h2>
+  <div class="row">
+    <div class="col"><label>Domain</label><input id="fDomain" placeholder="Environment" /></div>
+    <div class="col"><label>State</label><input id="fState" placeholder="Jharkhand" /></div>
+    <div class="col"><label>Development Stage</label><input id="fStage" placeholder="PROTOTYPE" /></div>
+  </div>
+  <button onclick="searchMarketplace()">Search Solutions</button>
+  <table id="solutionsTable">
+    <thead><tr><th>Solution</th><th>Title</th><th>Support Needed</th><th>Action</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<!-- STEP 4: INTEREST -->
+<section>
+  <h2>4. Express Interest → Accept/Reject → Collaboration</h2>
+  <div class="row">
+    <div class="col"><label>Solution ID</label><input id="interestSolutionId" placeholder="SOL-001" /></div>
+    <div class="col"><label>Partner ID</label><input id="interestPartnerId" value="IND-001" /></div>
+  </div>
+  <label>Support Offered (comma separated)</label>
+  <input id="interestSupport" value="Hardware, Technical Mentorship" />
+  <label>Message</label>
+  <input id="interestMessage" value="We can support pilot deployment." />
+  <button onclick="expressInterest()">Express Interest</button>
+  <button class="secondary" onclick="listInterests()">List Interests for this Solution</button>
+  <table id="interestsTable">
+    <thead><tr><th>Interest</th><th>Partner</th><th>Status</th><th>Action</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <small class="hint">
+    Accept/Reject requires the owning university's identity — set below (dev-mode header),
+    matching the solution's <code>universityId</code>.
+  </small>
+  <label>Acting as University ID (dev header)</label>
+  <input id="devUniversityId" value="UNI-JH-001" />
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
