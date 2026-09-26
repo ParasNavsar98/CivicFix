@@ -22,6 +22,8 @@ from app.services.orchestrator import ProblemIntakeOrchestrator
 from app.clients.classification_client import ClassificationClient
 from app.clients.duplicate_client import DuplicateClient
 
+from fastapi.middleware.cors import CORSMiddleware
+
 from app.api.problems import router as problems_router
 from app.api.reviewer import router as reviewer_router
 from app.api.routing import router as routing_router
@@ -76,6 +78,14 @@ def create_app(
             "AI microservice integration, human reviewer queues, audit trails, and government/research routing."
         ),
         version="1.0.0",
+    )
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
     )
 
     # Attach State Dependencies

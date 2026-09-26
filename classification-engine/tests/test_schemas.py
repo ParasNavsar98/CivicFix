@@ -133,3 +133,53 @@ def test_invalid_urgency_enum():
             confidence=0.8,
             reasoning="Test reasoning",
         )
+
+
+def test_severity_assessment_schema_and_case_normalization():
+    from app.schemas.classification import (
+        SeverityAssessment,
+        HealthSafetyImpactEnum,
+        ExposureScopeEnum,
+    )
+    sa = SeverityAssessment(
+        healthSafetyImpact="high",  # lowercase normalized to uppercase
+        exposureScope="community",  # lowercase normalized to uppercase
+    )
+    assert sa.healthSafetyImpact == HealthSafetyImpactEnum.HIGH
+    assert sa.exposureScope == ExposureScopeEnum.COMMUNITY
+    assert sa.vulnerablePopulationExposure == "UNKNOWN"  # Default value
+
+
+def test_severity_assessment_invalid_enum_rejected():
+    from app.schemas.classification import SeverityAssessment
+    with pytest.raises(ValidationError):
+        SeverityAssessment(healthSafetyImpact="VERY_HIGH")  # Invalid enum value
+
+
+def test_severity_assessment_extra_fields_forbidden():
+    from app.schemas.classification import SeverityAssessment
+    with pytest.raises(ValidationError):
+        SeverityAssessment(
+            healthSafetyImpact="HIGH",
+            unknownField="FORBIDDEN"  # Extra field forbidden by extra="forbid"
+        )
+
+
+def test_people_affected_schema():
+    from app.schemas.classification import PeopleAffected, PeopleAffectedSourceEnum
+    p_provided = PeopleAffected(value=200, unit="families", source="citizen_reported")
+    assert p_provided.value == 200
+    assert p_provided.unit == "families"
+    assert p_provided.source == PeopleAffectedSourceEnum.CITIZEN_REPORTED
+
+    p_default = PeopleAffected()
+    assert p_default.value is None
+    assert p_default.unit is None
+    assert p_default.source == PeopleAffectedSourceEnum.NOT_PROVIDED
+
+
+def test_people_affected_extra_fields_forbidden():
+    from app.schemas.classification import PeopleAffected
+    with pytest.raises(ValidationError):
+        PeopleAffected(value=100, extraData="FORBIDDEN")
+

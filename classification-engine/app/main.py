@@ -5,6 +5,8 @@ from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
+from fastapi.middleware.cors import CORSMiddleware
+
 from app.schemas.input import ProblemClassificationInput
 from app.schemas.classification import ClassificationResponse, StatusEnum, ErrorDetails
 from app.services.classifier import ClassifierService
@@ -31,6 +33,14 @@ app = FastAPI(
     description="Standalone microservice for classifying citizen-reported societal problems.",
     version="1.0.0",
     lifespan=lifespan,
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Global classifier service instance

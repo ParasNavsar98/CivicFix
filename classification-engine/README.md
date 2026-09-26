@@ -309,10 +309,33 @@ All unit tests mock external LLM/Ollama network calls to run fast and determinis
 
 ---
 
-## 12. Future Extension Points
+## 12. Severity Assessment Framework
+
+CivicFix evaluates severity using an explicit, evidence-based qualitative framework. Before assigning the final `severity` (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`), the model systematically evaluates 9 qualitative severity factors:
+
+1. **Health & Safety Impact**: Physical or health-related harm (`NONE`, `LOW`, `MODERATE`, `HIGH`, `CRITICAL`, `UNKNOWN`).
+2. **Exposure Scope**: Qualitative population scope (`INDIVIDUAL`, `LOCAL`, `COMMUNITY`, `LARGE_AREA`, `WIDESPREAD`, `UNKNOWN`).
+3. **Vulnerable Population Exposure**: Presence of vulnerable groups like children, elderly, patients (`NONE_IDENTIFIED`, `POSSIBLE`, `CLEAR`, `UNKNOWN`).
+4. **Geographic Extent**: Spatial footprint of affected area (`SINGLE_LOCATION`, `LOCAL_AREA`, `MULTIPLE_LOCATIONS`, `WIDE_AREA`, `UNKNOWN`).
+5. **Duration / Persistence**: How long problem has existed (`SHORT_TERM`, `ONGOING`, `LONG_TERM`, `PERSISTENT`, `UNKNOWN`).
+6. **Infrastructure / Essential Service Impact**: Disruption to critical utilities or services (`NONE`, `LOW`, `MODERATE`, `HIGH`, `CRITICAL`, `UNKNOWN`).
+7. **Environmental Impact**: Ecological or pollution consequences (`NONE`, `LOW`, `MODERATE`, `HIGH`, `CRITICAL`, `UNKNOWN`).
+8. **Social / Economic Impact**: Livelihood, business, or educational harm (`NONE`, `LOW`, `MODERATE`, `HIGH`, `CRITICAL`, `UNKNOWN`).
+9. **Reversibility**: Ease of reversing or recovering from impact (`EASILY_REVERSIBLE`, `RECOVERABLE`, `DIFFICULT_TO_RECOVER`, `POTENTIALLY_IRREVERSIBLE`, `UNKNOWN`).
+
+### Critical Operating Principles:
+- **No Fact Fabrication**: CivicFix does not invent missing population counts, durations, costs, or other unsupported facts. Unsupported information is marked `UNKNOWN` or `NOT_PROVIDED`.
+- **Impact vs. Certainty**: Missing information represents uncertainty and may reduce confidence score (triggering `review_required`), but does NOT automatically force a `LOW` severity rating for serious problems.
+- **Severity ≠ Urgency**: `severity` (magnitude of harm) and `urgency` (speed of action required) are evaluated independently.
+- **Implementation Design Note**: *These 9 severity factors are an explicit CivicFix implementation design for consistent explainability and are not presented as exact weights or requirements mandated by the SRS.*
+
+---
+
+## 13. Future Extension Points
 Designed for seamless integration into larger platforms:
 1. Multilingual input translation
 2. Image & Video multi-modal analysis
 3. Vector embeddings & duplicate problem detection
 4. Custom fine-tuned ML model evaluation
 5. Human feedback & active learning loops
+

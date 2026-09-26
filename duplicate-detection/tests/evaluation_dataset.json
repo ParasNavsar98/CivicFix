@@ -1636,5 +1636,67 @@
       "secondaryDomains": [],
       "subcategory": "Other"
     }
+  },
+  {
+    "case_id": "CASE-051",
+    "category": "missing_metadata",
+    "expected_duplicate": true,
+    "problem_a": {
+      "problemId": "P-MASTER-601",
+      "title": "Hospital medicine shortage",
+      "description": "Primary health center lacks basic emergency medicines.",
+      "location": {
+        "lat": 28.7041,
+        "long": 77.1025,
+        "address": "PHC Ward 5"
+      },
+      "primaryDomain": null,
+      "secondaryDomains": [],
+      "subcategory": null
+    },
+    "problem_b": {
+      "problemId": "P-CANDIDATE-602",
+      "title": "Shortage of Medicines in a nearby hospital",
+      "description": "Hospitals lack medicines.",
+      "location": {
+        "lat": 28.7041,
+        "long": 77.1025,
+        "address": "PHC Ward 5"
+      },
+      "primaryDomain": null,
+      "secondaryDomains": [],
+      "subcategory": null
+    }
+  },
+  {
+    "case_id": "CASE-052",
+    "category": "contradictory_case",
+    "expected_duplicate": false,
+    "problem_a": {
+      "problemId": "P-MASTER-603",
+      "title": "Hospital medicine shortage",
+      "description": "Primary health center lacks basic emergency medicines.",
+      "location": {
+        "lat": 28.7041,
+        "long": 77.1025,
+        "address": "PHC Ward 5"
+      },
+      "primaryDomain": null,
+      "secondaryDomains": [],
+      "subcategory": null
+    },
+    "problem_b": {
+      "problemId": "P-CANDIDATE-604",
+      "title": "Hospital electricity outage",
+      "description": "Primary health center power cut and total electricity blackout.",
+      "location": {
+        "lat": 28.7041,
+        "long": 77.1025,
+        "address": "PHC Ward 5"
+      },
+      "primaryDomain": null,
+      "secondaryDomains": [],
+      "subcategory": null
+    }
   }
 ]
