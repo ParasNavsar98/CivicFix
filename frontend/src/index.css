@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #034F46;
+  --color-primary-light: #0F766E;
+  --color-secondary: #6A5ACD;
+  --color-secondary-light: #E9DFFF;
+  --color-background: #F7F5E8;
+  --color-surface: #FFFDF5;
+  --color-text: #17332F;
+  --color-text-muted: #66736F;
+  --color-border: #D8D8C8;
+  --color-success: #087F6B;
+  --color-warning: #B7791F;
+  --color-danger: #B83A3A;
+}
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif: 'Newsreader', Georgia, serif;
+  }
+}
+
+.font-serif-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+/* Light Warm Ambient Radial Glow Backgrounds */
+.bg-radial-glow {
+  background: radial-gradient(circle at 50% 10%, rgba(15, 118, 110, 0.08) 0%, rgba(106, 90, 205, 0.04) 40%, transparent 70%);
+}
+
+.bg-radial-glow-subtle {
+  background: radial-gradient(circle at 50% 0%, rgba(3, 79, 70, 0.05) 0%, transparent 60%);
+}
+
+/* Glassmorphism & Light Surface Panels */
+.glass-panel {
+  background: rgba(255, 253, 245, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid #D8D8C8;
+}
+
+.glass-card {
+  background: #FFFDF5;
+  border: 1px solid #D8D8C8;
+  box-shadow: 0 4px 20px rgba(23, 51, 47, 0.04);
+}
+
+.glass-card:hover {
+  border-color: #0F766E;
+  box-shadow: 0 8px 30px rgba(3, 79, 70, 0.08);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F7F5E8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D8D8C8;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #66736F;
+}
